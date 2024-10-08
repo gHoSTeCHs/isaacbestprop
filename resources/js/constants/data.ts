@@ -11,7 +11,7 @@ export const navLinks = [
     },
     {
         title: 'Properties',
-        href: '/properties',
+        href: '/properties/categories',
     },
     {
         title: 'Services',
@@ -616,7 +616,11 @@ interface PropertyType {
     description: string;
 }
 
-export const propertyTypes: PropertyType[] = [
+export const propertyTypes: ({
+    image: {};
+    name: string;
+    description: string
+})[] = [
     {
         name: 'Building',
         image: images.buildings,

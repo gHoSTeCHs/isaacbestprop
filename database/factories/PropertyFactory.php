@@ -21,7 +21,7 @@ class PropertyFactory extends Factory
     {
         return [
             'property_category_id' => PropertyCategory::factory(),
-            'title' => fake()->title(),
+            'title' => fake()->words(3,true),
             'description' => fake()->paragraph(),
             'location' => fake()->address(),
             'bathrooms' => fake()->randomElement([2, 4, 0, 3, 5, 2, 3]),

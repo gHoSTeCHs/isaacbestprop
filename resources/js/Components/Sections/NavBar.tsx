@@ -12,15 +12,6 @@ const NavBar = ({auth}) => {
         setIsMenuOpen((prev) => !prev);
     };
 
-    const logOut = async () => {
-        // try {
-        //     await account.deleteSession('current');
-        //     navigate('/login');
-        // } catch (error) {
-        //     console.error('Error logging out:', error);
-        // }
-    };
-
     return (
         <div className="bg-background-secondary py-4 border border-border border-l-0 border-r-0">
             <nav className="container md:flex items-center justify-between">
@@ -93,7 +84,7 @@ const NavBar = ({auth}) => {
                             <button
                                 type="button"
                                 className="p-4 rounded-md font-semibold  hover:bg-background-primary hover:text-txt"
-                                onClick={logOut}>
+                            >
                                 Logout
                             </button>
                         )}

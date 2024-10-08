@@ -2,11 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\CategoryImage;
 use App\Models\Property;
+use App\Models\PropertyCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PropertyCategory>
+ * @extends Factory<PropertyCategory>
  */
 class PropertyCategoryFactory extends Factory
 {
@@ -19,12 +21,13 @@ class PropertyCategoryFactory extends Factory
     {
         return [
             //
-            'title'=>fake()->title()
+            'title' => fake()->word(),
+            'description' => fake()->paragraph(nbSentences: 2)
         ];
     }
 
     public function configure()
     {
-        return $this->has(Property::factory()->count(5), 'properties');
+        return $this->has(Property::factory()->count(5), 'properties')->has(CategoryImage::factory()->count(1), 'image');
     }
 }

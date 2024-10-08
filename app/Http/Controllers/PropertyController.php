@@ -3,16 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Property;
+use App\Models\PropertyCategory;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class PropertyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Response
     {
-        //
+
     }
 
     /**
@@ -37,6 +40,7 @@ class PropertyController extends Controller
     public function show(Property $property)
     {
         //
+
     }
 
     /**

@@ -33,7 +33,7 @@ class PropertyCategoryController extends Controller
             'properties' => $properties
         ]);
 
-//        return \response()->json($properties);
+        // return \response()->json($properties);
 
     }
 }

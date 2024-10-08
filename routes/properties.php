@@ -6,3 +6,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/properties/categories', [PropertyCategoryController::class, 'index']);
 Route::get('/properties/categories/{title}', [PropertyCategoryController::class, 'getPropertiesByCategory']);
+Route::get('property/{title}', [PropertyController::class, 'index']);

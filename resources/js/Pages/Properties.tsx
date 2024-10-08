@@ -1,29 +1,39 @@
+import { PageProps } from "@/types";
 import PropertyCard from "@/Components/PropertyCard";
-import {Link} from "@inertiajs/react";
+import NavBar from "@/Components/Sections/NavBar";
+import { Link } from "@inertiajs/react";
 
 interface PropertiesProps {
-    images: string[]
+    images: string[];
 }
 
-const Properties = ({properties, images}) => {
+const Properties = ({ properties, auth }: PageProps<{ properties: any }>) => {
     return (
-        <div className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center mt-10">
-            {properties.map((property) => (
-                <Link
-                    className="w-full"
-                    herf={`/property/${encodeURIComponent(doc.title)}`}
-                    key={property.$id}>
-                    <PropertyCard
-                        title={property.title}
-                        location={doc.location}
-                        price={doc.price}
-                        // images={property.imgUrls}
-                        description={property.description}
-                        images={images}/>
-                </Link>
-            ))}
-        </div>
-    )
-}
+        <>
+            <NavBar auth={auth} />
 
-export default Properties
+            <div className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center mt-10">
+                {properties.map((property: any) => {
+                    return (
+                        <Link
+                            className="w-full"
+                            href={`/property/${property.title}}`}
+                            key={property.$id}
+                        >
+                            <PropertyCard
+                                key={property.id}
+                                title={property.title}
+                                location={property.location}
+                                price={property.price}
+                                description={property.description}
+                                images={property.images}
+                            />
+                        </Link>
+                    );
+                })}
+            </div>
+        </>
+    );
+};
+
+export default Properties;

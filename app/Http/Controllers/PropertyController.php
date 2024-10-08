@@ -13,9 +13,13 @@ class PropertyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
-
+        $title = $request->title;
+        $property = Property::query()->where('title', $title)->with('images')->get();
+        return Inertia::render('Property', [
+            'property' => $property
+        ]);
     }
 
     /**

@@ -1,7 +1,7 @@
 import { images } from '@/constants';
 import Button from '../ui/button';
 import Stats from '../Stats';
-import { Link } from 'react-router-dom';
+import {InertiaLinkProps, Link} from '@inertiajs/react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 
@@ -71,7 +71,7 @@ const Hero = () => {
 					</div>
 					<div className="flex flex-col gap-4 md:flex-row md:w-[400px] md:mx-auto md:items-center md:justify-center lg:w-auto lg:justify-start">
 						<Button className="para">
-							<Link to={'/services'}>Learn More</Link>
+							<Link href={'/services'}>Learn More</Link>
 						</Button>
 						<Button className="para" variant="secondary">
 							{' '}

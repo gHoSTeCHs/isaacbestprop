@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {InertiaLinkProps, Link} from "@inertiajs/react";
 
 interface FooterComponentProps {
 	title: string;
@@ -24,7 +24,7 @@ const FooterComponent: React.FC<FooterComponentProps> = ({
 						<li
 							key={link.name}
 							className="text-sm hover:text-txt font-semibold">
-							<Link className="" to={link.link}>
+							<Link className="" href={link.link}>
 								{link.name}
 							</Link>
 						</li>

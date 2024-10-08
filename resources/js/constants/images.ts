@@ -39,7 +39,7 @@ import mediation from '../../images/mediation.png';
 import workshop from '../../images/workshop.png';
 import apartment from '../../images/apartment.jpg';
 import buildings from '../../images/building.jpg';
-import buildingconstruction from '../../images/images/buildingconstruction.jpg';
+import buildingconstruction from '../../images/buildingconstruction.jpg';
 import estate from '../../images/estate.jpg';
 import flats from '../../images/flats.jpg';
 import hotels from '../../images/hotels.jpg';

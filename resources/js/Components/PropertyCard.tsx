@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Button from "./ui/button";
 
@@ -11,27 +11,28 @@ interface PropertyProps {
 }
 
 const PropertyCard: React.FC<PropertyProps> = ({
-    title,
-    location,
-    price,
-    images,
-    description,
-}) => {
-    const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+                                                   title,
+                                                   location,
+                                                   price,
+                                                   images,
+                                                   description,
+                                               }) => {
+    const [emblaRef, emblaApi] = useEmblaCarousel({loop: true});
     useEffect(() => {
         if (emblaApi) {
             // console.log(emblaApi.slideNodes()) // Access API
         }
     }, [emblaApi]);
 
-    // let NGN = new Intl.NumberFormat('en-US', {
-    // 	style: 'currency',
-    // 	currency: 'NGN',
-    // 	maximumFractionDigits: 0,
-    // });
+    let NGN = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'NGN',
+        maximumFractionDigits: 0,
+    });
 
     return (
-        <div className="flex flex-col gap-6 border border-border max-w-[413px] py-5 px-4 rounded-lg lg:p-5 hover:scale-105 hover:bg-background-secondary/30 transition-all">
+        <div
+            className="flex flex-col gap-6 border border-border max-w-[413px] py-5 px-4 rounded-lg lg:p-5 hover:scale-105 hover:bg-background-secondary/30 transition-all">
             <div className="embla" ref={emblaRef}>
                 <div className="embla__container">
                     {images.map(
@@ -68,7 +69,7 @@ const PropertyCard: React.FC<PropertyProps> = ({
                     <div className="col-span-4">
                         <p className="text-txt text-sm">Price</p>
                         <h2 className="text-lg md:text-xl font-semibold">
-                            {parseInt(price)}
+                            {NGN.format(parseInt(price))}
                         </h2>
                     </div>
                     <Button variant="secondary" className="col-span-5">

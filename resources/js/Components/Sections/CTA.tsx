@@ -17,7 +17,7 @@ const CTA = () => {
                         />
                     </div>
                     <Button variant="secondary">
-                        <Link href={'/properties'}>Browse Properties</Link>
+                        <Link href={'/properties/categories'}>Browse Properties</Link>
                     </Button>
                 </div>
             </section>

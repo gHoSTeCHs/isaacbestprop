@@ -352,6 +352,9 @@ const Property = ({auth, property}) => {
                                                 className="bg-background-secondary w-full border border-border rounded-md p-3"
                                                 placeholder="Enter First Name"
                                             />
+                                            {errors.name && (
+                                                <p className="text-red-500">{errors.name.message}</p>
+                                            )}
                                         </div>
 
                                         <div className="flex flex-col gap-2">
@@ -368,6 +371,9 @@ const Property = ({auth, property}) => {
                                                 className="bg-background-secondary w-full border border-border rounded-md p-3"
                                                 placeholder="Enter Email"
                                             />
+                                            {errors.email && (
+                                                <p className="text-red-500">{errors.email.message}</p>
+                                            )}
                                         </div>
                                         <div className="flex flex-col gap-2">
                                             <label

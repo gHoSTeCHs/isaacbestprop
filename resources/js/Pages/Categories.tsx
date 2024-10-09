@@ -2,11 +2,11 @@ import CTA from "@/components/sections/CTA";
 import Footer from "@/components/sections/Footer";
 import NavBar from "@/components/sections/NavBar";
 import Header from "@/components/ui/header";
-import { ArrowLeftIcon } from "lucide-react";
-import { useEffect, useState } from "react";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import { PageProps } from "@/types";
-import { Link } from "@inertiajs/react";
+import {ArrowLeftIcon} from "lucide-react";
+import {useEffect, useState} from "react";
+import Skeleton, {SkeletonTheme} from "react-loading-skeleton";
+import {PageProps} from "@/types";
+import {Head, Link} from "@inertiajs/react";
 
 interface Files {
     imgUrls: string[];
@@ -20,7 +20,7 @@ interface Files {
     propertyType?: string;
 }
 
-const Categories = ({ auth, categories }) => {
+const Categories = ({auth, categories}) => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -31,7 +31,8 @@ const Categories = ({ auth, categories }) => {
 
     return (
         <div>
-            <NavBar auth={auth} />
+            <NavBar auth={auth}/>
+            <Head title={'Categories'}/>
             <div className="container">
                 <section className="py-12">
                     <Header
@@ -67,8 +68,8 @@ const Categories = ({ auth, categories }) => {
                         ))}
                     </div>
                 </section>
-                <CTA />
-                <Footer />
+                <CTA/>
+                <Footer/>
             </div>
         </div>
     );

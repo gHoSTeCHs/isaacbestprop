@@ -6,11 +6,19 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
+    $categories = \App\Models\PropertyCategory::all();
+    $featuredProperties = \App\Models\Property::query()
+        ->orderBy('created_at', 'asc')
+        ->limit(3)
+        ->with(['images'])
+        ->get();
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'categories' => $categories,
+        'featuredProperties' => $featuredProperties
     ]);
 });
 
@@ -25,11 +33,21 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/about', function () {
-    return Inertia::render('About');
+    $categories = \App\Models\PropertyCategory::all();
+    return Inertia::render('About', [
+        'categories' => $categories,
+    ]);
 });
+Route::get('/services', function () {
+    return Inertia::render('Services');
+});
+Route::get('/contact', function () {
+    return Inertia::render('Services');
+});
+
 Route::get('/Properties', function () {
     return Inertia::render('Properties');
 });
 
 require __DIR__ . '/auth.php';
-require  __DIR__ . '/properties.php';
+require __DIR__ . '/properties.php';

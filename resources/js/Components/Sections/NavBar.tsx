@@ -16,7 +16,7 @@ const NavBar = ({auth}) => {
         <div className="bg-background-secondary py-4 border border-border border-l-0 border-r-0">
             <nav className="container md:flex items-center justify-between">
                 <div className="flex justify-between items-center">
-                    <Link to="/">
+                    <Link href="/">
                         <img
                             loading="lazy"
                             src={icons.logo3}
@@ -61,7 +61,7 @@ const NavBar = ({auth}) => {
                     <div className="flex flex-col items-center mt-3">
                         {navLinks.map((link) => (
                             <Link
-                                to={link.href}
+                                href={link.href}
                                 key={link.title}
                                 className="p-4 rounded-md font-semibold  hover:bg-background-primary hover:text-txt">
                                 {link.title}

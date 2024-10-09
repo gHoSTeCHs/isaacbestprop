@@ -34,15 +34,20 @@ const PropertyCard: React.FC<PropertyProps> = ({
         <div className="flex flex-col gap-6 border border-border max-w-[413px] py-5 px-4 rounded-lg lg:p-5 hover:scale-105 hover:bg-background-secondary/30 transition-all">
             <div className="embla" ref={emblaRef}>
                 <div className="embla__container">
-                    {images.map((image, index) => (
-                        <img
-                            loading="lazy"
-                            src={image.path}
-                            alt=""
-                            key={index}
-                            className="embla__slide w-full max-h-[250px] object-cover rounded-md"
-                        />
-                    ))}
+                    {images.map(
+                        (
+                            image: { path: string | undefined },
+                            index: React.Key | null | undefined
+                        ) => (
+                            <img
+                                loading="lazy"
+                                src={image.path}
+                                alt=""
+                                key={index}
+                                className="embla__slide w-full max-h-[250px] object-cover rounded-md"
+                            />
+                        )
+                    )}
                 </div>
             </div>
             <div className="flex flex-col gap-4">

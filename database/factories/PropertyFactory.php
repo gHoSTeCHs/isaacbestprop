@@ -3,12 +3,13 @@
 namespace Database\Factories;
 
 use App\Models\Amenities;
+use App\Models\Property;
 use App\Models\PropertyCategory;
 use App\Models\PropertyImage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Property>
+ * @extends Factory<Property>
  */
 class PropertyFactory extends Factory
 {

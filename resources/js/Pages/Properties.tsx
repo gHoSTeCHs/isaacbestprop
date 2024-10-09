@@ -17,7 +17,7 @@ const Properties = ({ properties, auth }: PageProps<{ properties: any }>) => {
                     return (
                         <Link
                             className="w-full"
-                            href={`/property/${property.title}}`}
+                            href={`/property/${property.title}`}
                             key={property.$id}
                         >
                             <PropertyCard

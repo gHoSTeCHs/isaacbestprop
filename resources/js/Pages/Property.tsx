@@ -1,29 +1,30 @@
 import NavBar from "@/Components/Sections/NavBar";
 import ReactPlayer from "react-player/youtube";
-import { EmblaOptionsType } from "embla-carousel";
+import {EmblaOptionsType} from "embla-carousel";
 import EmblaCarousel from "@/Components/ui/imgcarousel";
 import Header from "@/Components/ui/header";
 import Button from "@/Components/ui/button";
 import Footer from "@/Components/Sections/Footer";
 import CTA from "@/Components/Sections/CTA";
-import { Loader } from "lucide-react";
+import {Loader} from "lucide-react";
 import z from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from "@inertiajs/react";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {Head, Link} from "@inertiajs/react";
+import {useState} from "react";
 
-interface File {
-    images: [];
-    title: string;
-    location: string;
-    price: string;
-    imgUrls: string[];
-    description: string;
-    amenities: string[];
-    bedrooms: string;
-    bathroom: string;
-    link: string;
-}
+// interface File {
+//     images: [];
+//     title: string;
+//     location: string;
+//     price: string;
+//     imgUrls: string[];
+//     description: string;
+//     amenity: string[];
+//     bedrooms: string;
+//     bathrooms: string;
+//     video_url: string;
+// }
 
 const formSchema = z.object({
     name: z.string().min(3, "Name must be at least 3 characters long"),
@@ -37,16 +38,28 @@ const formSchema = z.object({
 
 const OPTIONS: EmblaOptionsType = {};
 
-const Property = (auth: any) => {
-    const [property, setProperty] = useState<File | null>(null);
-    const [error, setError] = useState<string | null>(null);
+const Property = ({auth, property}) => {
+    let propertyImages = []
 
-    const SLIDES = property?.imgUrls || [];
+    property?.images.forEach((image) => {
+        propertyImages.push(image.path)
+    })
+    property.amenities.forEach((ameniti) => {
+        console.log(ameniti.amenity);
+    })
+
+    let NGN = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'NGN',
+        maximumFractionDigits: 0,
+    });
+
+    console.log(property);
 
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: {errors},
     } = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -62,12 +75,12 @@ const Property = (auth: any) => {
 
         const subject = encodeURIComponent("Contact Form Submission");
         const body = encodeURIComponent(`
-    Name: ${data.name}
-    Email: ${data.email}
-    Phone Number: ${data.number}
-    Message:
-    ${data.message}
-  `);
+      Name: ${data.name}
+      Email: ${data.email}
+      Phone Number: ${data.number}
+      Message:
+      ${data.message}
+    `);
 
         window.location.replace(
             `mailto:isaacamuchie@gmail.com?subject=${subject}&body=${body}`
@@ -76,17 +89,18 @@ const Property = (auth: any) => {
 
     return (
         <>
-            <NavBar auth={auth} />
+            <Head title={property.title}/>
+            <NavBar auth={auth}/>
             <div className="container">
-                {error && <p className="text-red-500">{error}</p>}
                 {property ? (
                     <>
                         <div className="flex flex-col gap-3 py-5">
-                            <h1 className="text-xl font-bold">
-                                {property?.title}
+                            <h1 className="text-xl font-bold capitalize">
+                                {property.title}
                             </h1>
                             <div className="flex gap-5 items-center">
-                                <div className="inline-flex items-center gap-2 justify-start border border-border p-2 rounded-lg">
+                                <div
+                                    className="inline-flex items-center gap-2 justify-start border border-border p-2 rounded-lg">
                                     <Link href={"/"}>
                                         <svg
                                             width="14"
@@ -104,18 +118,20 @@ const Property = (auth: any) => {
                                         </svg>
                                     </Link>
 
-                                    <p>{property?.location}</p>
+                                    <p>{property.location}</p>
                                 </div>
 
                                 <p className="font-bold text-xl">
-                                    <span className="text-sm text-txt font-normal mr-2">
-                                        Price
-                                    </span>
+									<span className="text-sm text-txt font-normal mr-2">
+										Price
+									</span>
+                                    {/* {formatAmount('1798300000')} */}
+                                    {NGN.format(parseInt(property.price))}
                                 </p>
                             </div>
                         </div>
 
-                        <EmblaCarousel slides={SLIDES} options={OPTIONS} />
+                        <EmblaCarousel slides={propertyImages} options={OPTIONS}/>
 
                         <div className="border border-border p-4 rounded-md mt-5">
                             <div className="flex flex-col gap-2">
@@ -223,7 +239,7 @@ const Property = (auth: any) => {
                                         </p>
                                     </div>
                                     <h1 className="font-semibold text-lg">
-                                        {property.bathroom}
+                                        {property.bathrooms}
                                     </h1>
                                 </div>
                             </div>
@@ -254,7 +270,7 @@ const Property = (auth: any) => {
                                             />
                                         </svg>
                                         <p className="text-sm text-txt font-medium ">
-                                            {amenity}
+                                            {amenity.amenity}
                                         </p>
                                     </div>
                                 ))}
@@ -262,13 +278,13 @@ const Property = (auth: any) => {
                         </div>
 
                         <div className="py-4 mt-4 rounded-md">
-                            {property.link ? (
+                            {property.video_url ? (
                                 <ReactPlayer
-                                    url={property.link}
+                                    url={property.video_url}
                                     width={"100%"}
                                 />
                             ) : (
-                                <p>No Video avaliable</p>
+                                <p>No Video available</p>
                             )}
                         </div>
                         <div className="py-9">
@@ -311,9 +327,9 @@ const Property = (auth: any) => {
                                             ></path>
                                             <path
                                                 fill="#fff"
-                                                fill-rule="evenodd"
+                                                fillRule="evenodd"
                                                 d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z"
-                                                clip-rule="evenodd"
+                                                clipRule="evenodd"
                                             ></path>
                                         </svg>
                                         <p>Send a message</p>
@@ -323,19 +339,15 @@ const Property = (auth: any) => {
                                 <div className="border border-border p-4 rounded-md mt-6">
                                     <form
                                         className="flex flex-col gap-4"
-                                        onSubmit={handleSubmit(onSubmit)}
-                                    >
+                                        onSubmit={handleSubmit(onSubmit)}>
                                         <div className="flex flex-col gap-2">
-                                            <label
-                                                htmlFor="name"
-                                                className="text-base font-semibold"
-                                            >
+                                            <label htmlFor="name" className="text-base font-semibold">
                                                 First Name
                                             </label>
                                             <input
                                                 id="name"
                                                 type="text"
-                                                {...register("name")}
+                                                {...register('name')}
                                                 name="name"
                                                 className="bg-background-secondary w-full border border-border rounded-md p-3"
                                                 placeholder="Enter First Name"
@@ -345,14 +357,13 @@ const Property = (auth: any) => {
                                         <div className="flex flex-col gap-2">
                                             <label
                                                 htmlFor="email"
-                                                className="text-base font-semibold"
-                                            >
+                                                className="text-base font-semibold">
                                                 Email
                                             </label>
                                             <input
                                                 id="email"
                                                 type="email"
-                                                {...register("email")}
+                                                {...register('email')}
                                                 name="email"
                                                 className="bg-background-secondary w-full border border-border rounded-md p-3"
                                                 placeholder="Enter Email"
@@ -361,50 +372,41 @@ const Property = (auth: any) => {
                                         <div className="flex flex-col gap-2">
                                             <label
                                                 htmlFor="number"
-                                                className="text-base font-semibold"
-                                            >
+                                                className="text-base font-semibold">
                                                 Number
                                             </label>
                                             <input
                                                 id="number"
                                                 type="text"
-                                                {...register("number")}
+                                                {...register('number')}
                                                 name="number"
                                                 className="bg-background-secondary w-full border border-border rounded-md p-3"
                                                 placeholder="Enter Phone Number"
                                             />
                                             {errors.number && (
-                                                <p className="text-red-500">
-                                                    {errors.number.message}
-                                                </p>
+                                                <p className="text-red-500">{errors.number.message}</p>
                                             )}
                                         </div>
                                         <div className="flex flex-col gap-2">
                                             <label
                                                 htmlFor="message"
-                                                className="text-base font-semibold"
-                                            >
+                                                className="text-base font-semibold">
                                                 Message
                                             </label>
                                             <textarea
                                                 id="message"
                                                 // name="message"
-                                                {...register("message")}
+                                                {...register('message')}
                                                 rows={5}
                                                 className="bg-background-secondary w-full border border-border rounded-md p-3 "
                                                 placeholder="Enter First Name"
                                             />
                                             {errors.message && (
-                                                <p className="text-red-500">
-                                                    {errors.message.message}
-                                                </p>
+                                                <p className="text-red-500">{errors.message.message}</p>
                                             )}
                                         </div>
 
-                                        <Button
-                                            variant="secondary"
-                                            className="mt-5"
-                                        >
+                                        <Button variant="secondary" className="mt-5">
                                             Submit
                                         </Button>
                                     </form>
@@ -412,14 +414,15 @@ const Property = (auth: any) => {
                             </div>
                         </div>
                     </>
+
                 ) : (
                     <div className="flex justify-center h-screen items-center">
-                        <Loader className=" animate-spin w-8 h-8" />
+                        <Loader className=" animate-spin w-8 h-8"/>
                     </div>
                 )}
             </div>
-            <CTA />
-            <Footer />
+            <CTA/>
+            <Footer/>
         </>
     );
 };

@@ -15,7 +15,6 @@ export default function Welcome({
                                     categories,
                                     featuredProperties
                                 }: PageProps<{ laravelVersion: string; phpVersion: string }>) {
-    // console.log(featuredProperties)
     return (
         <>
             <Head title="Home"/>

@@ -72,9 +72,9 @@ const Hero = ({categories}) => {
                     </div>
                     <div
                         className="grid grid-cols-3 gap-4 lg:w-auto">
-                        {categories.map((category) => {
+                        {categories.map((category, index) => {
                             return (
-                                <Button className="bg-gray-700 para text-white">
+                                <Button className="bg-gray-700 para text-white" key={index}>
                                     <Link href={`/properties/categories/${category.title}`}>{category.title}</Link>
                                 </Button>
                             )

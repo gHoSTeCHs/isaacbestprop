@@ -58,7 +58,7 @@ const Featured = ({featuredProperties}) => {
                                     <Link
                                         className="w-full"
                                         href={`/property/${property.title}`}
-                                        key={property.$id}>
+                                        key={property.id}>
                                         <PropertyCard
                                             title={property.title || 'Untitled'}
                                             location={property.location}

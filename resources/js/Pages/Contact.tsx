@@ -5,15 +5,9 @@ import Button from '@/components/ui/button';
 import Header from '@/components/ui/header';
 import LinkCard from '@/components/ui/linkcard';
 import { images } from '@/constants';
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+
 
 const Contact = () => {
-	const { pathname } = useLocation();
-
-	useEffect(() => {
-		window.scrollTo(0, 0);
-	}, [pathname]);
 
 	return (
 		<div>
@@ -23,7 +17,7 @@ const Contact = () => {
 					<Header
 						title={'Get in Touch with IsaacBestProperties'}
 						description={
-							"Welcome to IsaacBestProperties's Contact Us page. We're here to assist you with any inquiries, requests, or feedback you may have."
+							"Welcome to IsaacBestProperty's Contact Us page. We're here to assist you with any inquiries, requests, or feedback you may have."
 						}
 						showAbstract={false}
 					/>

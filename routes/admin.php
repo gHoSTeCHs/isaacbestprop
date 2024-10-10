@@ -10,5 +10,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/create', [AdminController::class, 'store']);
     Route::get('/admin/categories', [AdminController::class, 'viewCategoryPage'])->name('admin.category');
     Route::post('/admin/categories', [AdminController::class, 'createCategory'])->name('admin.category');
+    Route::delete('/admin/{id}', [AdminController::class, 'destroy'])->name('admin.delete');
 // Add more admin routes here
 });

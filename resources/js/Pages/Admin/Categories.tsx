@@ -1,19 +1,27 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import {Head, useForm} from '@inertiajs/react';
+import {Head, Link, useForm} from '@inertiajs/react';
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
 import MultiImageInput from "@/Components/ImageInput";
-import {FormEventHandler} from "react";
+import {FormEventHandler, useState} from "react";
 import {ToastContainer, toast} from "react-toastify";
 import TextArea from "@/Components/TextArea";
 import PrimaryButton from "@/Components/PrimaryButton";
+import Modal from "@/Components/Modal";
+import {Trash} from "lucide-react";
 
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function Dashboard() {
 
-    const {data, setData, errors, post, processing, reset} = useForm({
+const Dashboard = ({categories}) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [categoryToDelete, setCategoryToDelete] = useState(null);
+    const closeModal = () => {
+        setIsModalOpen(false); // Close the modal
+    };
+
+    const {data, setData, errors, post, processing, reset, delete: destroy} = useForm({
         title: '',
         description: '',
         image: []
@@ -26,6 +34,18 @@ export default function Dashboard() {
             onSuccess: () => {
                 reset('title', 'image')
                 toast.success('Category created successfully');
+            }
+        })
+    }
+
+    const handleDelete = (id) => {
+        destroy(route('admin.delete', id), {
+            onSuccess: () => {
+                if (isModalOpen) {
+                    closeModal()
+                }
+
+                toast.success('Category deleted successfully')
             }
         })
     }
@@ -45,6 +65,38 @@ export default function Dashboard() {
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg p-4">
                             <div className='flex flex-col gap-4 container max-w-[600px]'>
+
+                                <Modal show={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                                    <div className="p-4">
+                                        <h2 className="text-xl font-bold">Delete Category</h2>
+                                        <p>Are you sure you want to delete the category "{categoryToDelete?.title}"?</p>
+                                        <div className="flex justify-end gap-4 mt-4">
+                                            <button
+                                                onClick={() => setIsModalOpen(false)}
+                                                className="bg-gray-500 text-white px-4 py-2 rounded"
+                                            >
+                                                Cancel
+                                            </button>
+
+                                            <button
+                                                onClick={() => handleDelete(categoryToDelete?.id)}
+                                                className="bg-red-600 text-white px-4 py-2 rounded"
+                                            >
+                                                Delete
+                                            </button>
+                                            {/*<form onSubmit={handleDelete}>*/}
+                                            {/*    <input hidden name='category' value={categoryToDelete?.id}/>*/}
+                                            {/*    <button*/}
+                                            {/*        onClick={handleDelete}*/}
+                                            {/*        className="bg-red-600 text-white px-4 py-2 rounded"*/}
+                                            {/*    >*/}
+                                            {/*        Delete*/}
+                                            {/*    </button>*/}
+                                            {/*</form>*/}
+
+                                        </div>
+                                    </div>
+                                </Modal>
                                 <form className='flex flex-col gap-4' onSubmit={handleSubmit}
                                       encType="multipart/form-data">
                                     <div>
@@ -90,6 +142,37 @@ export default function Dashboard() {
                                     </div>
                                 </form>
                             </div>
+                            <div>
+                                <div
+                                    className=" grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center mt-10">
+                                    {categories.map((category, index) => (
+                                        <div
+                                            key={index}
+                                            className="relative flex flex-col gap-2 justify-center p-4 max-w-[300px] h-[428px] border border-border rounded-xl hover:scale-105 hover:bg-background-secondary/30 transition-all"
+                                        >
+                                            <img
+                                                loading="lazy"
+                                                src={`${category.image.path}`}
+                                                alt={category.title}
+                                                className="w-full h-[200px] object-cover rounded-xl"
+                                            />
+                                            <div className="flex flex-col gap-2">
+                                                <h1 className="text-xl font-semibold">
+                                                    {category.title}
+                                                </h1>
+                                                <p className="text-sm text-txt">
+                                                    {category.description}
+                                                </p>
+                                            </div>
+                                            <Trash className='absolute font-bold text-red-600 top-6 right-6'
+                                                   onClick={() => {
+                                                       setIsModalOpen(true)
+                                                       setCategoryToDelete(category);
+                                                   }}/>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -98,3 +181,5 @@ export default function Dashboard() {
         </AuthenticatedLayout>
     );
 }
+
+export default Dashboard

@@ -134,4 +134,10 @@ class AdminController extends Controller
             ]);
         };
     }
+
+    public function destroy($id)
+    {
+        $category = PropertyCategory::query()->findOrFail($id);
+        $category->delete();
+    }
 }

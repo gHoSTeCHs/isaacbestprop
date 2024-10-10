@@ -14,7 +14,7 @@ return new class extends Migration {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(PropertyCategory::class)->constrained()->cascadeOnDelete();
-            $table->string('title');
+            $table->string('title')->unique();
             $table->string('description');
             $table->string('location');
             $table->unsignedInteger('bathrooms');

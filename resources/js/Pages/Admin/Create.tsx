@@ -1,6 +1,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import {Head, Link, useForm} from '@inertiajs/react';
-import {FormEvent, FormEventHandler} from "react";
+import {Head, useForm} from '@inertiajs/react';
+import { FormEventHandler} from "react";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
@@ -9,12 +9,18 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import MultiImageInput from "@/Components/ImageInput";
 import SelectBox from "@/Components/ui/select";
 import {boolean} from "zod";
+import {ToastContainer, toast} from 'react-toastify';
+
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const AdminDashboard = ({categories}) => {
+
     const {data, setData, post, processing, errors, reset} = useForm({
         title: '',
         category: '',
         description: '',
+        amenities: [{value: ''}],
         location: '',
         bathrooms: '',
         bedrooms: '',
@@ -29,11 +35,29 @@ const AdminDashboard = ({categories}) => {
         categoryTitles.push(category.title)
     })
 
+    const addAmenity = () => {
+        setData('amenities', [...data.amenities, {value: ''}])
+    }
+
+    const removeAmenity = (index) => {
+        const updatedAmenities = data.amenities.filter((_, i) => i !== index);
+        setData('amenities', updatedAmenities);
+    };
+
+    const handleAmenityChange = (index, e) => {
+        const updatedAmenities = [...data.amenities];
+        updatedAmenities[index].value = e.target.value;
+        setData('amenities', updatedAmenities);
+    };
+
     const submit: FormEventHandler = (e) => {
         e.preventDefault()
 
         post(route('admin.create'), {
-            onFinish: () => reset(['title', 'description'])
+            onSuccess: () => {
+                reset('title', 'category', 'description', 'amenities', 'location', 'bathrooms', 'bedrooms', 'price', 'video_url', 'sold', 'images',)
+                toast.success('Property created successfully!'); // Show success toast
+            },
         })
     }
     return (
@@ -82,9 +106,44 @@ const AdminDashboard = ({categories}) => {
                                         name='description'
                                         className='mt-1 block w-full'
                                         autoComplete='description'
-                                        isFocused={true}
                                         onChange={(e) => setData('description', e.target.value)}/>
                                     <InputError message={errors.description} className='mt-2'/>
+                                </div>
+
+                                <div>
+                                    <InputLabel htmlFor="amenities" value="Amenities"/>
+                                    <div className="flex flex-col gap-2">
+                                        {data.amenities.map((amenity, index) => (
+                                            <div key={index} className="flex gap-2">
+                                                <TextInput
+                                                    id={`amenity-${index}`}
+                                                    type="text"
+                                                    name={`amenities[${index}].value`}
+                                                    value={amenity.value}
+                                                    onChange={(e) => handleAmenityChange(index, e)}
+                                                    placeholder="Enter an amenity"
+                                                    className="block w-full"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => removeAmenity(index)}
+                                                    className="bg-red-500 text-white p-2 rounded"
+                                                >
+                                                    Remove
+                                                </button>
+                                            </div>
+                                        ))}
+                                        <button
+                                            type="button"
+                                            onClick={addAmenity}
+                                            className="mt-2 bg-blue-500 text-white p-2 rounded"
+                                        >
+                                            Add Amenity
+                                        </button>
+                                        {errors.amenities && (
+                                            <InputError message={errors.amenities} className="mt-2"/>
+                                        )}
+                                    </div>
                                 </div>
 
                                 <div>
@@ -95,7 +154,6 @@ const AdminDashboard = ({categories}) => {
                                                value={data.location}
                                                className='mt-1 block w-full'
                                                autoComplete='location'
-                                               isFocused={true}
                                                onChange={(e) => setData('location', e.target.value)}
                                     />
                                     <InputError message={errors.location} className='mt-2'/>
@@ -109,7 +167,6 @@ const AdminDashboard = ({categories}) => {
                                                value={data.bathrooms}
                                                className='mt-1 block w-full'
                                                autoComplete='bathrooms'
-                                               isFocused={true}
                                                onChange={(e) => setData('bathrooms', e.target.value)}
                                     />
                                     <InputError message={errors.bathrooms} className='mt-2'/>
@@ -123,7 +180,6 @@ const AdminDashboard = ({categories}) => {
                                                value={data.bedrooms}
                                                className='mt-1 block w-full'
                                                autoComplete='bedrooms'
-                                               isFocused={true}
                                                onChange={(e) => setData('bedrooms', e.target.value)}
                                     />
                                     <InputError message={errors.bedrooms} className='mt-2'/>
@@ -137,7 +193,6 @@ const AdminDashboard = ({categories}) => {
                                                value={data.price}
                                                className='mt-1 block w-full'
                                                autoComplete='price'
-                                               isFocused={true}
                                                onChange={(e) => setData('price', e.target.value)}
                                     />
                                     <InputError message={errors.price} className='mt-2'/>
@@ -151,7 +206,6 @@ const AdminDashboard = ({categories}) => {
                                                value={data.video_url}
                                                className='mt-1 block w-full'
                                                autoComplete='video_url'
-                                               isFocused={true}
                                                onChange={(e) => setData('video_url', e.target.value)}
                                     />
                                     <InputError message={errors.video_url} className='mt-2'/>
@@ -191,6 +245,7 @@ const AdminDashboard = ({categories}) => {
                     </div>
                 </div>
             </div>
+            <ToastContainer/>
         </AuthenticatedLayout>
     );
 }

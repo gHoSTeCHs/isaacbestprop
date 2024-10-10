@@ -35,12 +35,21 @@ export default function Authenticated({
                                 </NavLink>
 
                                 {user.isAdmin ?
-                                    <NavLink
-                                        href={route('admin.create')}
-                                        active={route().current('admin.create')}
-                                    >
-                                        Create
-                                    </NavLink> :
+                                    <>
+                                        <NavLink
+                                            href={route('admin.create')}
+                                            active={route().current('admin.create')}
+                                        >
+                                            Create
+                                        </NavLink>
+
+                                        <NavLink
+                                            href={route('admin.category')}
+                                            active={route().current('admin.category')}
+                                        >
+                                            Categories
+                                        </NavLink>
+                                    </>:
                                     <p></p>
                                 }
                             </div>

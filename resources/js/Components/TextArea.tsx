@@ -8,6 +8,7 @@ import {
 
 export default forwardRef(function TextArea(
     {
+        value = '',
         className = '',
         isFocused = false,
         ...props

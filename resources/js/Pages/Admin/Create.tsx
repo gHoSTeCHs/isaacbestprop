@@ -1,6 +1,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head, useForm} from '@inertiajs/react';
-import { FormEventHandler} from "react";
+import {FormEventHandler} from "react";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
@@ -9,10 +9,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import MultiImageInput from "@/Components/ImageInput";
 import SelectBox from "@/Components/ui/select";
 import {boolean} from "zod";
-import {ToastContainer, toast} from 'react-toastify';
-
-
-import 'react-toastify/dist/ReactToastify.css';
+import {toast} from 'react-toastify';
 
 const AdminDashboard = ({categories}) => {
 
@@ -55,7 +52,17 @@ const AdminDashboard = ({categories}) => {
 
         post(route('admin.create'), {
             onSuccess: () => {
-                reset('title', 'category', 'description', 'amenities', 'location', 'bathrooms', 'bedrooms', 'price', 'video_url', 'sold', 'images',)
+                reset('title',
+                    'category',
+                    'description',
+                    'amenities',
+                    'location',
+                    'bathrooms',
+                    'bedrooms',
+                    'price',
+                    'video_url',
+                    'sold',
+                    'images',)
                 toast.success('Property created successfully!'); // Show success toast
             },
         })
@@ -245,7 +252,6 @@ const AdminDashboard = ({categories}) => {
                     </div>
                 </div>
             </div>
-            <ToastContainer/>
         </AuthenticatedLayout>
     );
 }

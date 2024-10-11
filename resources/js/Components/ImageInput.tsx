@@ -1,17 +1,19 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { X, Upload } from 'lucide-react';
+import React, {useState, useRef, useEffect} from 'react';
+import {X, Upload} from 'lucide-react';
+import {useForm} from "@inertiajs/react";
+import {toast} from "react-toastify";
 
 interface ImageFile {
-    file: File;
+    file: File | null; // Updated to allow null for URL images
     preview: string;
 }
 
 interface MultiImageInputProps {
-    onChange: (files: File[]) => void;
-    value?: File[];
+    onChange: (files: (File | string)[]) => void; // Allow string for URLs
+    value?: (File | string)[]; // Allow string for existing URLs
 }
 
-const MultiImageInput: React.FC<MultiImageInputProps> = ({ onChange, value }) => {
+const MultiImageInput: React.FC<MultiImageInputProps> = ({onChange, value}) => {
     const [images, setImages] = useState<ImageFile[]>([]);
     const [isDragging, setIsDragging] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -19,16 +21,27 @@ const MultiImageInput: React.FC<MultiImageInputProps> = ({ onChange, value }) =>
     useEffect(() => {
         // Clear object URLs to avoid memory leaks
         return () => {
-            images.forEach(image => URL.revokeObjectURL(image.preview));
+            images.forEach(image => {
+                if (image.file) URL.revokeObjectURL(image.preview);
+            });
         };
     }, [images]);
 
     useEffect(() => {
         if (value) {
-            const newImages = value.map(file => ({
-                file,
-                preview: URL.createObjectURL(file)
-            }));
+            const newImages = value.map(fileOrUrl => {
+                if (fileOrUrl instanceof File) {
+                    return {
+                        file: fileOrUrl,
+                        preview: URL.createObjectURL(fileOrUrl),
+                    };
+                } else {
+                    return {
+                        file: null, // No file for existing images
+                        preview: fileOrUrl, // This is the URL for the image
+                    };
+                }
+            });
             setImages(newImages);
         }
     }, [value]);
@@ -73,14 +86,28 @@ const MultiImageInput: React.FC<MultiImageInputProps> = ({ onChange, value }) =>
         }));
         const updatedImages = [...images, ...newImages];
         setImages(updatedImages);
-        onChange(updatedImages.map(img => img.file));
+        onChange(updatedImages.map(img => img.file || img.preview)); // Return File or URL
     };
 
     const removeImage = (index: number) => {
         const updatedImages = images.filter((_, i) => i !== index);
         setImages(updatedImages);
-        onChange(updatedImages.map(img => img.file));
+        onChange(updatedImages.map(img => img.file || img.preview)); // Return File or URL
     };
+
+    const {post, delete: destroy} = useForm({})
+
+    const deleteImage = async (id) => {
+        try {
+            await destroy(route('admin.images', id), {
+                onSuccess: () => {
+                    toast.success('Image deleted successfully')
+                }
+            })
+        } catch (e) {
+            toast.error('Something went wrong')
+        }
+    }
 
     return (
         <div className="w-full max-w-md mx-auto">
@@ -102,7 +129,7 @@ const MultiImageInput: React.FC<MultiImageInputProps> = ({ onChange, value }) =>
                     multiple
                     accept="image/*"
                 />
-                <Upload className="mx-auto text-gray-400" />
+                <Upload className="mx-auto text-gray-400"/>
                 <p className="mt-2 text-sm text-gray-600">
                     Drag and drop images here, or click to select files
                 </p>
@@ -110,22 +137,43 @@ const MultiImageInput: React.FC<MultiImageInputProps> = ({ onChange, value }) =>
 
             {images.length > 0 && (
                 <div className="mt-4 grid grid-cols-3 gap-4">
-                    {images.map((image, index) => (
-                        <div key={index} className="relative group">
-                            <img
-                                src={image.preview}
-                                alt={`Preview ${index}`}
-                                className="w-full h-24 object-cover rounded-lg"
-                            />
-                            <button
-                                className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                                onClick={() => removeImage(index)}
-                                type="button"
-                            >
-                                <X size={16} />
-                            </button>
-                        </div>
-                    ))}
+                    {images.map((image, index) => {
+                        return (
+                            <>
+                                {image.preview.path ? <>
+                                    <div key={index} className="relative group">
+                                        <img
+                                            src={image.preview.path}
+                                            alt={`Preview ${index}`}
+                                            className="w-full h-24 object-cover rounded-lg"
+                                        />
+                                        <button
+                                            className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                                            onClick={() => deleteImage(image.preview.id)}
+                                            type="button"
+                                        >
+                                            <X size={16}/>
+                                        </button>
+                                    </div>
+                                </> : <>
+                                    <div key={index} className="relative group">
+                                        <img
+                                            src={image.preview}
+                                            alt={`Preview ${index}`}
+                                            className="w-full h-24 object-cover rounded-lg"
+                                        />
+                                        <button
+                                            className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                                            onClick={() => removeImage(index)}
+                                            type="button"
+                                        >
+                                            <X size={16}/>
+                                        </button>
+                                    </div>
+                                </>}
+                            </>
+                        )
+                    })}
                 </div>
             )}
         </div>

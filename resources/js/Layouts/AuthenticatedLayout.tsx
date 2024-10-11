@@ -3,7 +3,7 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import {Link, usePage} from '@inertiajs/react';
-import {PropsWithChildren, ReactNode, useState} from 'react';
+import React, {PropsWithChildren, ReactNode, useState} from 'react';
 import {ToastContainer} from "react-toastify";
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -86,11 +86,6 @@ export default function Authenticated({
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
-                                        <Dropdown.Link
-                                            href={route('profile.edit')}
-                                        >
-                                            Profile
-                                        </Dropdown.Link>
                                         <Dropdown.Link
                                             href={route('logout')}
                                             method="post"

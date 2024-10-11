@@ -79,7 +79,11 @@ const Dashboard = ({properties}) => {
                                                 images={property.images}
                                             />
                                             <div className='absolute flex items-center gap-3 top-4 right-4'>
-                                                <Edit className='text-blue-600 font-bold' size={30}/>
+                                                <Link href={route('admin.properties', property.id)}>
+                                                    <Edit className='text-blue-600 font-bold' size={30}
+                                                    />
+                                                </Link>
+
                                                 <Trash className='text-red-600 font-bold' size={30} onClick={() => {
                                                     setIsModalOpen(true)
                                                     setPropertyToDelete(property)

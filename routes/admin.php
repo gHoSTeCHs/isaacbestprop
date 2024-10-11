@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminImageController;
+use App\Http\Controllers\AdminPropertyController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -9,7 +11,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/create', [AdminController::class, 'create'])->name('admin.create');
     Route::post('/admin/create', [AdminController::class, 'store']);
 
+    Route::get('/admin/properties/{id}', [AdminPropertyController::class, 'index'])->name('admin.properties');
     Route::delete('/admin/properties/{id}', [AdminController::class, 'deleteProperties'])->name('admin.properties');
+    Route::patch('/admin/properties/{id}', [AdminPropertyController::class, 'update'])->name('admin.properties');
+
+    Route::delete('/admin/images/{id}', [AdminImageController::class, 'destroy'])->name('admin.images');
 
     Route::get('/admin/categories', [AdminController::class, 'viewCategoryPage'])->name('admin.category');
     Route::post('/admin/categories', [AdminController::class, 'createCategory'])->name('admin.category');

@@ -4,6 +4,9 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import {Link, usePage} from '@inertiajs/react';
 import {PropsWithChildren, ReactNode, useState} from 'react';
+import {ToastContainer} from "react-toastify";
+
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Authenticated({
                                           header,
@@ -49,7 +52,7 @@ export default function Authenticated({
                                         >
                                             Categories
                                         </NavLink>
-                                    </>:
+                                    </> :
                                     <p></p>
                                 }
                             </div>
@@ -151,12 +154,31 @@ export default function Authenticated({
                 >
                     <div className="space-y-1 pb-3 pt-2">
                         <ResponsiveNavLink
-                            href={route('dashboard')}
-                            active={route().current('dashboard')}
+                            href={route('admin.dashboard')}
+                            active={route().current('admin.dashboard')}
                         >
                             Dashboard
                         </ResponsiveNavLink>
 
+                        {user.isAdmin ?
+                            <>
+                                <ResponsiveNavLink
+                                    href={route('admin.create')}
+                                    active={route().current('admin.create')}
+                                >
+                                    Create
+                                </ResponsiveNavLink>
+
+                                <ResponsiveNavLink
+                                    href={route('admin.category')}
+                                    active={route().current('admin.category')}
+                                >
+                                    Categories
+                                </ResponsiveNavLink>
+                            </>
+                            :
+                            <></>
+                        }
                     </div>
 
                     <div className="border-t border-gray-200 pb-1 pt-4">
@@ -194,6 +216,7 @@ export default function Authenticated({
             )}
 
             <main>{children}</main>
+            <ToastContainer/>
         </div>
     );
 }

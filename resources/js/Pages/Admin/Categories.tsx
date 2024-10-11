@@ -5,13 +5,11 @@ import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
 import MultiImageInput from "@/Components/ImageInput";
 import {FormEventHandler, useState} from "react";
-import {ToastContainer, toast} from "react-toastify";
+import {toast} from "react-toastify";
 import TextArea from "@/Components/TextArea";
 import PrimaryButton from "@/Components/PrimaryButton";
 import Modal from "@/Components/Modal";
 import {Trash} from "lucide-react";
-
-import 'react-toastify/dist/ReactToastify.css';
 
 
 const Dashboard = ({categories}) => {
@@ -32,7 +30,7 @@ const Dashboard = ({categories}) => {
 
         post(route('admin.category'), {
             onSuccess: () => {
-                reset('title', 'image')
+                reset('title', 'image', 'description')
                 toast.success('Category created successfully');
             }
         })
@@ -54,7 +52,7 @@ const Dashboard = ({categories}) => {
         <AuthenticatedLayout
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Create Categories
+                    Create and View Categories
                 </h2>
             }
         >
@@ -84,16 +82,6 @@ const Dashboard = ({categories}) => {
                                             >
                                                 Delete
                                             </button>
-                                            {/*<form onSubmit={handleDelete}>*/}
-                                            {/*    <input hidden name='category' value={categoryToDelete?.id}/>*/}
-                                            {/*    <button*/}
-                                            {/*        onClick={handleDelete}*/}
-                                            {/*        className="bg-red-600 text-white px-4 py-2 rounded"*/}
-                                            {/*    >*/}
-                                            {/*        Delete*/}
-                                            {/*    </button>*/}
-                                            {/*</form>*/}
-
                                         </div>
                                     </div>
                                 </Modal>
@@ -177,7 +165,6 @@ const Dashboard = ({categories}) => {
                     </div>
                 </div>
             </div>
-            <ToastContainer/>
         </AuthenticatedLayout>
     );
 }

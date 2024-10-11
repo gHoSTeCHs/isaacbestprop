@@ -7,8 +7,11 @@ use App\Models\CategoryImage;
 use App\Models\Property;
 use App\Models\PropertyCategory;
 use App\Models\PropertyImage;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Inertia\Response;
 use function Pest\Laravel\json;
 
 class AdminController extends Controller
@@ -25,7 +28,7 @@ class AdminController extends Controller
         $this->categories = PropertyCategory::query()->with('image')->get();
     }
 
-    public function index()
+    public function index(): Response
     {
         $properties = Property::query()->with(['images'])->orderBy('created_at', 'desc')->paginate(3);
         return Inertia::render('Admin/Dashboard', [
@@ -33,7 +36,7 @@ class AdminController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(): Response
     {
         $categories = PropertyCategory::query()->get();
         return Inertia::render('Admin/Create', [
@@ -41,7 +44,7 @@ class AdminController extends Controller
         ]);
     }
 
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $attributes = $request->validate([
             'title' => 'required',
@@ -104,14 +107,14 @@ class AdminController extends Controller
         return redirect()->route('admin.create')->with('success', 'Property created successfully');
     }
 
-    public function viewCategoryPage()
+    public function viewCategoryPage(): Response
     {
         return Inertia::render('Admin/Categories', [
             'categories' => $this->categories
         ]);
     }
 
-    public function createCategory(Request $request)
+    public function createCategory(Request $request): void
     {
         $attributes = $request->validate([
             'title' => 'required|string',
@@ -135,9 +138,29 @@ class AdminController extends Controller
         };
     }
 
-    public function destroy($id)
+    public function deleteProperties($id)
     {
-        $category = PropertyCategory::query()->findOrFail($id);
+        $property = Property::query()->with(['images', 'amenities'])->findOrFail($id);
+        $amenities = Amenities::query()->where('property_id', $id)->get();
+        $images = PropertyImage::query()->where('property_id', $id)->get();
+
+        if ($images) {
+            foreach ($images as $image) {
+                Storage::disk('public')->delete($image->path);
+            }
+        }
+
+        $property->delete();
+    }
+
+    public function destroy($id): void
+    {
+        $category = PropertyCategory::query()->with('image')->findOrFail($id);
+        $categoryImage = CategoryImage::query()->where('property_category_id', $category->id)->first();
+        if ($categoryImage) {
+            Storage::disk('public')->delete($categoryImage->path);
+        }
+
         $category->delete();
     }
 }

@@ -141,7 +141,7 @@ const Dashboard = ({categories}) => {
                                         } else if (categoryImage[0] == 'uploads') {
                                             image = `${window.location.origin}/storage/${category.image.path}`
                                         }
-                                        console.log(image);
+
                                         return (
                                             <div
                                                 key={index}

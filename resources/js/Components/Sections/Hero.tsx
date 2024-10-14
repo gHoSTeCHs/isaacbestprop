@@ -58,28 +58,52 @@ const Hero = ({categories}) => {
                             className="text-[28px] font-semibold text-primary md:text-4xl lg:text-5xl">
                             Discover Your Dream Property with IsaacBest
                         </h2>
-                        <p className="text-[14px] text-txt lg:text-[16px] para">
-                            Your journey to finding the perfect property begins here. Explore
-                            our listings to find the home that matches your dreams.{' '}
-                            <span className="font-bold">
-								{' '}
-                                Toronto Junction Mcc/Uratta road Imo state Nigeria.
-							</span>{' '}
-                            <span className="font-bold">08035450948</span>,{' '}
-                            <span className="font-bold">09068412173</span> Email:
-                            <span className="font-bold">isaacamuchie@gmail.com</span>
-                        </p>
+                        <>
+                            <p className="text-[14px] text-txt lg:text-[16px] para">
+                                Your journey to finding the perfect property begins here. Explore
+                                our listings to find the home that matches your dreams.{' '}
+                            </p>
+                            <div>
+                                <div className='flex gap-3'>
+                                    <h3>{'Location:'} </h3>
+                                    <span className="text-lg font-bold">
+                                        Toronto Junction Mcc/Uratta road Imo state Nigeria.
+							        </span>
+                                </div>
+
+                                <div className='flex gap-3'>
+                                    <h3>{'Phones:'} </h3>
+                                    <span className="text-lg font-bold">
+                                        08035450948 , 09068412173
+							        </span>
+                                </div>
+
+                                <div className='flex gap-3'>
+                                    <h3>{'Email:'} </h3>
+                                    <span className="text-lg font-bold">
+                                        isaacamuchie@gmail.com
+                                    </span>
+                                </div>
+                            </div>
+
+                        </>
+
                     </div>
                     <div
                         className="grid grid-cols-3 gap-4 lg:w-auto">
-                        {categories.map((category, index) => {
-                            return (
-                                <Button className="bg-gray-700 para text-white" key={index}>
-                                    <Link href={`/properties/categories/${category.title}`}>{category.title}</Link>
-                                </Button>
-                            )
-                        })}
-
+                        {categories.length > 1 ?
+                            <>
+                                {categories.map((category, index) => {
+                                    return (
+                                        <Button className="bg-gray-700 para text-white" key={index}>
+                                            <Link
+                                                href={`/properties/categories/${category.title}`}>{category.title}</Link>
+                                        </Button>
+                                    )
+                                })}
+                            </>
+                            :
+                            <></>}
                     </div>
                     <Stats/>
                 </div>

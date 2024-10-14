@@ -41,31 +41,41 @@ const Categories = ({auth, categories}) => {
                         showAbstract={true}
                     />
                     <div className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center mt-10">
-                        {categories.map((category) => (
-                            <Link
-                                href={`/properties/categories/${category.title}`}
-                            >
-                                <div
-                                    key={category.title}
-                                    className="flex flex-col gap-2 justify-center p-4 max-w-[300px] h-[428px] border border-border rounded-xl hover:scale-105 hover:bg-background-secondary/30 transition-all"
+                        {categories.map((category) => {
+                            let image;
+                            const categoryImage = category.image.path.split('/')
+                            if (categoryImage[0] == 'https:') {
+                                image = category.image.path;
+                            } else if (categoryImage[0] == 'uploads') {
+                                image = `${window.location.origin}/storage/${category.image.path}`
+                            }
+
+                            return (
+                                <Link
+                                    href={`/properties/categories/${category.title}`}
                                 >
-                                    <img
-                                        loading="lazy"
-                                        src={category.image.path}
-                                        alt={category.title}
-                                        className="w-full h-[200px] object-cover rounded-xl"
-                                    />
-                                    <div className="flex flex-col gap-2">
-                                        <h1 className="text-xl font-semibold">
-                                            {category.title}
-                                        </h1>
-                                        <p className="text-sm text-txt">
-                                            {category.description}
-                                        </p>
+                                    <div
+                                        key={category.title}
+                                        className="flex flex-col gap-2 justify-center p-4 max-w-[300px] h-[428px] border border-border rounded-xl hover:scale-105 hover:bg-background-secondary/30 transition-all"
+                                    >
+                                        <img
+                                            loading="lazy"
+                                            src={image}
+                                            alt={category.title}
+                                            className="w-full h-[200px] object-cover rounded-xl"
+                                        />
+                                        <div className="flex flex-col gap-2">
+                                            <h1 className="text-xl font-semibold">
+                                                {category.title}
+                                            </h1>
+                                            <p className="text-sm text-txt">
+                                                {category.description}
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                            </Link>
-                        ))}
+                                </Link>
+                            )
+                        })}
                     </div>
                 </section>
                 <CTA/>

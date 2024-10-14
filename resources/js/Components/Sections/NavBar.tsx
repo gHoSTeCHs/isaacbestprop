@@ -12,6 +12,8 @@ const NavBar = ({auth}) => {
         setIsMenuOpen((prev) => !prev);
     };
 
+    auth.user === null ? console.log('Null') : ('Not Null')
+
     return (
         <div className="bg-background-secondary py-4 border border-border border-l-0 border-r-0">
             <nav className="container md:flex items-center justify-between">
@@ -68,25 +70,16 @@ const NavBar = ({auth}) => {
                             </Link>
                         ))}
 
-
-                        {!auth.user ? (
+                        {auth.user?.isAdmin ? (
                             <>
-                                {authLinks.map((link) => (
-                                    <Link
-                                        href={link.href}
-                                        key={link.title}
-                                        className="p-4 font-semibold rounded-md hover:bg-background-primary hover:text-txt">
-                                        {link.title}
-                                    </Link>
-                                ))}
+                                <Link
+                                    href={route('admin.dashboard')}
+                                    className="p-4 font-semibold rounded-md hover:bg-background-primary hover:text-txt">
+                                    Admin Dashboard
+                                </Link>
                             </>
                         ) : (
-                            <button
-                                type="button"
-                                className="p-4 rounded-md font-semibold  hover:bg-background-primary hover:text-txt"
-                            >
-                                Logout
-                            </button>
+                            <></>
                         )}
 
                         <Button variant="primary">

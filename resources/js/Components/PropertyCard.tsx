@@ -49,7 +49,6 @@ const PropertyCard: React.FC<PropertyProps> = ({
                             } else if (imagePath[0] == 'uploads') {
                                 images = `${window.location.origin}/storage/${image.path}`
                             }
-                            console.log(images)
                             return (
                                 <img
                                     loading="lazy"

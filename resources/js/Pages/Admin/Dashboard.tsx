@@ -62,42 +62,57 @@ const Dashboard = ({properties}) => {
                                     </div>
                                 </div>
                             </Modal>
-                            <div
-                                className="grid grid-col-1 items-center md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center mt-10">
-                                {properties.data.map((property: any, index) => {
-                                    return (
-                                        <div
-                                            className="relative w-full"
-                                            key={index}
-                                        >
-                                            <PropertyCard
-                                                key={property.id}
-                                                title={property.title}
-                                                location={property.location}
-                                                price={property.price}
-                                                description={property.description}
-                                                images={property.images}
-                                            />
-                                            <div className='absolute flex items-center gap-3 top-4 right-4'>
-                                                <Link href={route('admin.properties', property.id)}>
-                                                    <Edit className='text-blue-600 font-bold' size={30}
-                                                    />
-                                                </Link>
 
-                                                <Trash className='text-red-600 font-bold' size={30} onClick={() => {
-                                                    setIsModalOpen(true)
-                                                    setPropertyToDelete(property)
-                                                }}/>
+                            {properties.data.length < 1 ?
+                                <>
+                                    No properties found
+                                </> :
+                                <div
+                                    className="grid grid-col-1 items-center md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center mt-10 transition-all duration-75">
+                                    {properties.data.map((property: any, index) => {
+                                        return (
+                                            <div
+                                                className="relative"
+                                                key={index}
+                                            >
+                                                <PropertyCard
+                                                    key={property.id}
+                                                    title={property.title}
+                                                    location={property.location}
+                                                    price={property.price}
+                                                    description={property.description}
+                                                    images={property.images}
+                                                />
+                                                <div className='absolute flex items-center gap-3 top-4 right-4'>
+                                                    <Link href={route('admin.properties', property.id)}>
+                                                        <Edit className='text-blue-600 font-bold' size={30}
+                                                        />
+                                                    </Link>
+
+                                                    <Trash className='text-red-600 font-bold' size={30} onClick={() => {
+                                                        setIsModalOpen(true)
+                                                        setPropertyToDelete(property)
+                                                    }}/>
+                                                </div>
                                             </div>
-                                        </div>
-                                    );
-                                })}
+                                        );
+                                    })}
+                                </div>}
+
+                            <div className="pagination mt-6">
+                                {properties.links.map((link, index) => (
+                                    <Link
+                                        key={index}
+                                        href={link.url}
+                                        className={`px-4 py-2 border ${link.active ? 'bg-blue-500 text-white' : ''} ${link.url === null ? 'pointer-events-none text-gray-500' : ''}`}
+                                        dangerouslySetInnerHTML={{__html: link.label}}
+                                    />
+                                ))}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            {/*<ToastContainer/>*/}
         </AuthenticatedLayout>
     );
 }

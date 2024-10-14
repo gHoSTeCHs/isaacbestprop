@@ -44,17 +44,13 @@ const Property = ({auth, property}) => {
     property?.images.forEach((image) => {
         propertyImages.push(image.path)
     })
-    property.amenities.forEach((ameniti) => {
-        console.log(ameniti.amenity);
-    })
+
 
     let NGN = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'NGN',
         maximumFractionDigits: 0,
     });
-
-    console.log(property);
 
     const {
         register,
@@ -71,8 +67,6 @@ const Property = ({auth, property}) => {
     });
 
     const onSubmit = (data: z.infer<typeof formSchema>) => {
-        console.log(data);
-
         const subject = encodeURIComponent("Contact Form Submission");
         const body = encodeURIComponent(`
       Name: ${data.name}

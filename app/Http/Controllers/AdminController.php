@@ -30,7 +30,7 @@ class AdminController extends Controller
 
     public function index(): Response
     {
-        $properties = Property::query()->with(['images'])->orderBy('created_at', 'desc')->paginate(3);
+        $properties = Property::query()->with(['images'])->orderBy('created_at', 'desc')->paginate(10);
         return Inertia::render('Admin/Dashboard', [
             'properties' => $properties
         ]);
@@ -138,7 +138,7 @@ class AdminController extends Controller
         };
     }
 
-    public function deleteProperties($id)
+    public function deleteProperties($id): void
     {
         $property = Property::query()->with(['images', 'amenities'])->findOrFail($id);
         $amenities = Amenities::query()->where('property_id', $id)->get();

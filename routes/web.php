@@ -8,7 +8,7 @@ use Inertia\Inertia;
 Route::get('/', function () {
     $categories = \App\Models\PropertyCategory::all();
     $featuredProperties = \App\Models\Property::query()
-        ->orderBy('created_at', 'asc')
+        ->orderBy('created_at', 'desc')
         ->limit(3)
         ->with(['images'])
         ->get();

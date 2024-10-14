@@ -35,28 +35,39 @@ const PropertyCard: React.FC<PropertyProps> = ({
             className="flex flex-col gap-6 border border-border max-w-[413px] py-5 px-4 rounded-lg lg:p-5 hover:scale-105 hover:bg-background-secondary/30 transition-all">
             <div className="embla" ref={emblaRef}>
                 <div className="embla__container">
+
                     {images.map(
                         (
                             image: { path: string | undefined },
                             index: React.Key | null | undefined
-                        ) => (
-                            <img
-                                loading="lazy"
-                                src={image.path}
-                                alt=""
-                                key={index}
-                                className="embla__slide w-full max-h-[250px] object-cover rounded-md"
-                            />
-                        )
+                        ) => {
+                            let images;
+                            const imagePath = image.path?.split('/');
+
+                            if (imagePath[0] == 'https:') {
+                                images = image.path
+                            } else if (imagePath[0] == 'uploads') {
+                                images = `${window.location.origin}/storage/${image.path}`
+                            }
+                            console.log(images)
+                            return (
+                                <img
+                                    loading="lazy"
+                                    src={images}
+                                    alt=""
+                                    key={index}
+                                    className="embla__slide w-full max-h-[250px] object-cover rounded-md"
+                                />
+                            )
+                        }
                     )}
                 </div>
             </div>
             <div className="flex flex-col gap-4">
-                <div className="line-clamp-1">
-                    <p className="inline-block bg-background-secondary border border-border rounded-full text-sm md:text-base p-1 px-3 line-clamp-1">
-                        {location}
-                    </p>
-                </div>
+                <p className="max-w-[280px] inline-block bg-background-secondary border border-border rounded-full text-sm md:text-base p-1 px-3 line-clamp-1 overflow-hidden text-ellipsis whitespace-nowrap">
+                    {location}
+                </p>
+
                 <div className="flex flex-col gap-1">
                     <h2 className="text-lg md:text-xl font-semibold line-clamp-1">
                         {title}

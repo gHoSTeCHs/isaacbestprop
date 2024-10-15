@@ -86,7 +86,7 @@ const NavBar: ({auth}: { auth: any }) => React.JSX.Element = ({auth}) => {
                         )}
 
                         <Button variant="primary">
-                            <Link to="/contact">Contact Us</Link>
+                            <Link href="/contact">Contact Us</Link>
                         </Button>
                     </div>
                 </div>

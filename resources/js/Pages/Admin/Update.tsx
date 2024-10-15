@@ -8,69 +8,79 @@ import TextArea from "@/Components/TextArea";
 import PrimaryButton from "@/Components/PrimaryButton";
 import MultiImageInput from "@/Components/ImageInput";
 import SelectBox from "@/Components/ui/select";
-import {boolean} from "zod";
 import {toast} from 'react-toastify';
-import {Categories, Category, Property} from "@/types";
+import {Amenity, Category, Property} from "@/types";
 
 interface UpdatePropertyProps {
-    property: Property
-    categories: Categories
+    property: Property;
+    categories: Category[];
+}
+
+interface UpdateFormData {
+    id?: number;
+    title: string;
+    category: string;
+    description: string;
+    amenities: Amenity[];
+    location: string;
+    bathrooms: string;
+    bedrooms: string;
+    price: string;
+    video_url: string;
+    sold: boolean;
+    images: (File | string | { path: string; id?: number })[];
 }
 
 const UpdateProperty: React.FC<UpdatePropertyProps> = ({property, categories}) => {
-    const {data, setData, patch, processing, errors, reset} = useForm({
+    const {data, setData, patch, processing, errors, reset} = useForm<UpdateFormData>({
         title: property.title,
-        category: '',
+        category: property.category || '',
         description: property.description,
-        amenities: property.amenities,
+        amenities: property.amenities || [],
         location: property.location,
         bathrooms: property.bathrooms,
         bedrooms: property.bedrooms,
         price: property.price,
-        video_url: property.video_url,
+        video_url: property.video_url || '',
         sold: property.sold,
-        images: property.images as File[]
-    })
+        images: property.images || []
+    });
 
-    let categoryTitles: any[] = [];
-    categories?.forEach((category: Category) => {
-        categoryTitles.push(category.title)
-    })
+    const categoryTitles = categories.map(category => category.title);
 
     const addAmenity = () => {
-        setData('amenities', [...data.amenities, {amenity: ''}])
-    }
+        setData('amenities', [...data.amenities, {amenity: ''}]);
+    };
 
     const removeAmenity = (index: number) => {
-        const updatedAmenities = data.amenities.filter((_: any, i:any) => i !== index);
+        const updatedAmenities = data.amenities.filter((_, i) => i !== index);
         setData('amenities', updatedAmenities);
     };
 
-    const handleAmenityChange = (index:number, e:any) => {
+    const handleAmenityChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
         const updatedAmenities = [...data.amenities];
-        updatedAmenities[index].amenity = e.target.value;
+        updatedAmenities[index] = {amenity: e.target.value};
         setData('amenities', updatedAmenities);
     };
 
-    // console.log(data.images)
-
+    const handleImageChange = (files: (File | string | { path: string; id?: number })[]) => {
+        setData('images', files);
+    };
 
     const submit: FormEventHandler = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         const id = property.id;
 
         try {
             await patch(route('admin.properties', id), {
                 onSuccess: () => {
-                    toast.success('Property Updated')
+                    toast.success('Property Updated');
                 }
-            })
-
+            });
         } catch (e) {
-            toast.error('Something went wrong')
+            toast.error('Something went wrong');
         }
-
-    }
+    };
 
     return (
         <AuthenticatedLayout
@@ -86,8 +96,7 @@ const UpdateProperty: React.FC<UpdatePropertyProps> = ({property, categories}) =
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg p-4">
                         <div className='flex flex-col gap-4 container max-w-[600px]'>
-                            <form className='flex flex-col gap-4' onSubmit={submit}
-                                  encType="multipart/form-data">
+                            <form className='flex flex-col gap-4' onSubmit={submit} encType="multipart/form-data">
                                 <div>
                                     <InputLabel htmlFor='title' value='Title'/>
                                     <TextInput id='title'
@@ -127,7 +136,7 @@ const UpdateProperty: React.FC<UpdatePropertyProps> = ({property, categories}) =
                                 <div>
                                     <InputLabel htmlFor="amenities" value="Amenities"/>
                                     <div className="flex flex-col gap-2">
-                                        {data.amenities.map((data:any, index: number) => (
+                                        {data.amenities.map((data: any, index: number) => (
                                             <div key={index} className="flex gap-2">
                                                 <TextInput
                                                     id={`amenity-${index}`}
@@ -224,14 +233,13 @@ const UpdateProperty: React.FC<UpdatePropertyProps> = ({property, categories}) =
                                     />
                                     <InputError message={errors.video_url} className='mt-2'/>
                                 </div>
-
                                 <div>
                                     <InputLabel htmlFor='sold' value='Sold'/>
                                     <input
                                         id='sold'
                                         name='sold'
                                         type='checkbox'
-                                        defaultValue={data.sold}
+                                        checked={data.sold}
                                         onChange={(e) => setData('sold', e.target.checked)}
                                         className="mt-1"
                                     />
@@ -243,7 +251,7 @@ const UpdateProperty: React.FC<UpdatePropertyProps> = ({property, categories}) =
                                         id='images'
                                         name='images'
                                         value={data.images}
-                                        onChange={(files) => setData('images', files)}
+                                        onChange={handleImageChange}
                                     />
                                     <InputError message={errors.images} className='mt-2'/>
                                 </div>
@@ -254,13 +262,11 @@ const UpdateProperty: React.FC<UpdatePropertyProps> = ({property, categories}) =
                                 </div>
                             </form>
                         </div>
-
                     </div>
                 </div>
             </div>
         </AuthenticatedLayout>
     );
+};
 
-}
-
-export default UpdateProperty
+export default UpdateProperty;

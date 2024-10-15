@@ -10,11 +10,13 @@ interface ImageFile {
 }
 
 interface MultiImageInputProps {
+    id?: string
+    name?:string
     onChange: (files: (File | string)[]) => void; // Allow string for URLs
-    value?: (File | { path: string; id: number })[]; // Allow string for existing URLs
+    value?: (string | File | { path: string; id?: number })[]; // Allow string for existing URLs
 }
 
-const MultiImageInput: React.FC<MultiImageInputProps> = ({onChange, value}) => {
+const MultiImageInput: React.FC<MultiImageInputProps> = ({onChange, value, id}) => {
     const [images, setImages] = useState<ImageFile[]>([]);
     const [isDragging, setIsDragging] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);

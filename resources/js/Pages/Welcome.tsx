@@ -7,7 +7,7 @@ import FAQ from "@/Components/Sections/FAQs";
 import CTA from "@/Components/Sections/CTA";
 import Footer from "@/Components/Sections/Footer";
 import React from "react";
-import {Categories} from "@/types";
+import {Category, Property} from "@/types";
 
 interface User {
     id: number,
@@ -19,27 +19,10 @@ interface AuthProps {
     user: User
 }
 
-
-interface FeaturedProperty {
-    id: number;
-    title: string;
-    description: string;
-    price: number;
-    bathrooms: number;
-    bedrooms: number;
-    location: string;
-    created_at: string; // You might want to use Date type if you parse it
-    updated_at: string; // Same as above
-    sold: number;
-    property_category_id: number;
-    video_url?: string; // Optional if not always present
-    images: string[];
-}
-
 interface WelcomeProps {
     auth: AuthProps,
-    categories: Categories
-    featuredProperties: FeaturedProperty[]
+    categories: Category[]
+    featuredProperties: Property[]
 }
 
 

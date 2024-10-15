@@ -8,14 +8,33 @@ import TextArea from "@/Components/TextArea";
 import PrimaryButton from "@/Components/PrimaryButton";
 import MultiImageInput from "@/Components/ImageInput";
 import SelectBox from "@/Components/ui/select";
-import {boolean} from "zod";
+import z, {boolean} from "zod";
 import {toast} from 'react-toastify';
 import {Category} from "@/types";
 
+const formSchema = z.object({
+    title: z.string(),
+    category: z.string(),
+    description: z.string(),
+    amenities: z.array(z.object({value: z.string()})),
+    location: z.string(),
+    bathrooms: z.string(),
+    bedrooms: z.string(),
+    price: z.string(),
+    video_url: z.string(),
+    sold: z.boolean(),
+    images: z.array(z.union([z.instanceof(File), z.string()])),
+});
+
+type FormData = z.infer<typeof formSchema>;
 
 const AdminDashboard: ({categories}: { categories: any }) => React.JSX.Element = ({categories}) => {
 
-    const {data, setData, post, processing, errors, reset} = useForm({
+    const handleImageChange = (files: (File | string)[]) => {
+        setData('images', files);
+    };
+
+    const {data, setData, post, processing, errors, reset} = useForm<FormData>({
         title: '',
         category: '',
         description: '',
@@ -25,8 +44,8 @@ const AdminDashboard: ({categories}: { categories: any }) => React.JSX.Element =
         bedrooms: '',
         price: '',
         video_url: '',
-        sold: boolean,
-        images: [] as File[]
+        sold: false,
+        images: []
     })
 
     let categoryTitles: any[] = [];
@@ -226,8 +245,8 @@ const AdminDashboard: ({categories}: { categories: any }) => React.JSX.Element =
                                         id='sold'
                                         name='sold'
                                         type='checkbox'
-                                        checked={data.sold}
-                                        onChange={(e) => setData('sold', e.target.checked)}
+                                        checked={data.sold as boolean}
+                                        onChange={(e) => setData({...data, sold: e.target.checked})}
                                         className="mt-1"
                                     />
                                 </div>
@@ -238,7 +257,7 @@ const AdminDashboard: ({categories}: { categories: any }) => React.JSX.Element =
                                         id='images'
                                         name='images'
                                         value={data.images}
-                                        onChange={(files) => setData('images', files)}
+                                        onChange={handleImageChange}
                                     />
                                     <InputError message={errors.images} className='mt-2'/>
                                 </div>

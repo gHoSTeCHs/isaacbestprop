@@ -48,21 +48,27 @@ export interface Categories {
 }
 
 export interface Amenity {
-    id: number
-    property_id: number
+    id?: number
+    property_id?: number
     amenity: string
 }
 
-export interface Amenities {
-    amenities: Amenity[]
+
+export interface PropertyImage {
+    path: string
+}
+
+export interface PropertyImages {
+    images: PropertyImage[]
 }
 
 export interface Property {
     id: number | undefined;
+    category?: any
     title: string;
     description: string;
     price: string;
-    amenities: Amenities
+    amenities: Amenity[]
     bathrooms: string;
     bedrooms: string;
     location: string;
@@ -71,7 +77,7 @@ export interface Property {
     sold: boolean;
     property_category_id: number;
     video_url?: string;
-    images: string[];
+    images: PropertyImage[];
 }
 
 export interface Properties {

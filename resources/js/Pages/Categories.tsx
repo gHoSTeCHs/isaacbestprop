@@ -4,7 +4,7 @@ import NavBar from "@/Components/Sections/NavBar";
 import Header from "@/Components/ui/header";
 import React, {useEffect, useState} from "react";
 import {Head, Link} from "@inertiajs/react";
-import {AuthProps, Categories, Category} from "@/types";
+import {AuthProps, Category} from "@/types";
 
 interface Files {
     imgUrls: string[];
@@ -20,7 +20,7 @@ interface Files {
 
 interface CategoryProps{
     auth: AuthProps
-    categories: Categories
+    categories: Category[]
 }
 
 const Categories: React.FC<CategoryProps> = ({auth, categories}) => {

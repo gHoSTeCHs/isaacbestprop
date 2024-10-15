@@ -12,7 +12,8 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Head, Link} from "@inertiajs/react";
 import React, {useState} from "react";
-import {AuthProps, Property} from "@/types";
+import {Amenity, AuthProps, PropertyImage} from "@/types";
+import type {Property} from '@/types'
 
 // interface File {
 //     images: [];
@@ -47,7 +48,7 @@ const OPTIONS: EmblaOptionsType = {};
 const Property: React.FC<PropertyPageProps> = ({auth, property}) => {
     let propertyImages: any[] = []
 
-    property?.images.forEach((image: string) => {
+    property?.images.forEach((image: PropertyImage) => {
         propertyImages.push(image.path)
     })
 
@@ -250,7 +251,7 @@ const Property: React.FC<PropertyPageProps> = ({auth, property}) => {
                                 Key Features and Amenities
                             </h1>
                             <div className="flex flex-col gap-4">
-                                {property.amenities.map((amenity, index: number) => (
+                                {property.amenities.map((amenity: Amenity, index: number) => (
                                     <div
                                         key={index}
                                         className="flex gap-4 items-center p-3 border border-l-btn border-r-0 border-t-0 border-b-0 bg-gradient-to-r from-background-secondary to-background-primary"

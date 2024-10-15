@@ -1,12 +1,15 @@
 import { ChevronDown } from 'lucide-react';
+import React from "react";
 
 interface SelectBoxProps {
+    id: string
+    name:string
 	title: string;
 	values: string[];
 	onChange: (value: string) => void;
 }
 
-const SelectBox: React.FC<SelectBoxProps> = ({ title, values, onChange }) => {
+const SelectBox: React.FC<SelectBoxProps> = ({ title, values, onChange, id }) => {
 	return (
 		<div className="relative h-10">
 			<select

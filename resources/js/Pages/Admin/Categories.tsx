@@ -16,6 +16,12 @@ interface AdminCategoriesProps {
     categories?: Category[]
 }
 
+interface FormData {
+    title: string;
+    description: string;
+    image: (File | string | { path: string; id: number })[];
+}
+
 const Dashboard: React.FC<AdminCategoriesProps> = ({categories}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [categoryToDelete, setCategoryToDelete] = useState<Category>();
@@ -23,7 +29,7 @@ const Dashboard: React.FC<AdminCategoriesProps> = ({categories}) => {
         setIsModalOpen(false); // Close the modal
     };
 
-    const {data, setData, errors, post, processing, reset, delete: destroy} = useForm({
+    const {data, setData, errors, post, processing, reset, delete: destroy} = useForm<FormData>({
         title: '',
         description: '',
         image: []
@@ -40,7 +46,7 @@ const Dashboard: React.FC<AdminCategoriesProps> = ({categories}) => {
         })
     }
 
-    const handleDelete = (id: number) => {
+    const handleDelete = (id: any) => {
         destroy(route('admin.delete', id), {
             onSuccess: () => {
                 if (isModalOpen) {
@@ -51,6 +57,10 @@ const Dashboard: React.FC<AdminCategoriesProps> = ({categories}) => {
             }
         })
     }
+
+    const handleImageChange = (files: (File | string)[]) => {
+        setData('image', files);
+    };
 
     return (
         <AuthenticatedLayout
@@ -121,8 +131,7 @@ const Dashboard: React.FC<AdminCategoriesProps> = ({categories}) => {
                                             id='image'
                                             name='image'
                                             value={data.image}
-                                            className='mt-1'
-                                            onChange={(files) => setData('image', files)}
+                                            onChange={handleImageChange}
                                         />
                                         <InputError message={errors.image} className='mt-2'/>
                                     </div>

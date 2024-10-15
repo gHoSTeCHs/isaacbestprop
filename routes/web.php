@@ -1,13 +1,15 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\Property;
+use App\Models\PropertyCategory;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    $categories = \App\Models\PropertyCategory::all();
-    $featuredProperties = \App\Models\Property::query()
+    $categories = PropertyCategory::all();
+    $featuredProperties = Property::query()
         ->orderBy('created_at', 'desc')
         ->limit(3)
         ->with(['images'])
@@ -33,7 +35,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/about', function () {
-    $categories = \App\Models\PropertyCategory::all();
+    $categories = PropertyCategory::all();
     return Inertia::render('About', [
         'categories' => $categories,
     ]);
@@ -48,6 +50,7 @@ Route::get('/contact', function () {
 Route::get('/Properties', function () {
     return Inertia::render('Properties');
 });
+
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';

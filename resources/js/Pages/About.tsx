@@ -1,16 +1,21 @@
-import CTA from '@/components/sections/CTA';
-import Footer from '@/components/sections/Footer';
-import Hero from '@/components/sections/Hero';
-import NavBar from '@/components/sections/NavBar';
-import AchievementComponent from '@/components/ui/achievement';
-import Header from '@/components/ui/header';
-import ValueComponent from '@/components/ui/value';
+import CTA from "@/Components/Sections/CTA";
+import Footer from "@/Components/Sections/Footer";
+import Hero from '@/Components/Sections/Hero';
+import NavBar from '@/Components/Sections/NavBar';
+import AchievementComponent from "@/Components/ui/achievement";
+import Header from "@/Components/ui/header";
+import ValueComponent from "@/Components/ui/value";
 import {Achievements, Values} from '@/constants/data';
-import {useEffect} from 'react';
 import {Head} from "@inertiajs/react";
+import React from "react";
+import {AuthProps, Category} from "@/types";
 
+interface AboutProps{
+    auth: AuthProps
+    categories: Category[]
+}
 
-const About = ({auth, categories}) => {
+const About: React.FC<AboutProps> = ({auth, categories}) => {
 
     return (
         <div className="">

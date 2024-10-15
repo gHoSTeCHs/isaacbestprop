@@ -11,7 +11,8 @@ import z from "zod";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Head, Link} from "@inertiajs/react";
-import {useState} from "react";
+import React, {useState} from "react";
+import {AuthProps, Property} from "@/types";
 
 // interface File {
 //     images: [];
@@ -26,6 +27,11 @@ import {useState} from "react";
 //     video_url: string;
 // }
 
+interface PropertyPageProps {
+    auth: AuthProps
+    property: Property
+}
+
 const formSchema = z.object({
     name: z.string().min(3, "Name must be at least 3 characters long"),
     email: z.string().email("Invalid email address"),
@@ -38,10 +44,10 @@ const formSchema = z.object({
 
 const OPTIONS: EmblaOptionsType = {};
 
-const Property = ({auth, property}) => {
-    let propertyImages = []
+const Property: React.FC<PropertyPageProps> = ({auth, property}) => {
+    let propertyImages: any[] = []
 
-    property?.images.forEach((image) => {
+    property?.images.forEach((image: string) => {
         propertyImages.push(image.path)
     })
 
@@ -120,7 +126,7 @@ const Property = ({auth, property}) => {
 										Price
 									</span>
                                     {/* {formatAmount('1798300000')} */}
-                                    {NGN.format(parseInt(property.price))}
+                                    {NGN.format(parseInt(String(property.price)))}
                                 </p>
                             </div>
                         </div>
@@ -244,7 +250,7 @@ const Property = ({auth, property}) => {
                                 Key Features and Amenities
                             </h1>
                             <div className="flex flex-col gap-4">
-                                {property.amenities.map((amenity, index) => (
+                                {property.amenities.map((amenity, index: number) => (
                                     <div
                                         key={index}
                                         className="flex gap-4 items-center p-3 border border-l-btn border-r-0 border-t-0 border-b-0 bg-gradient-to-r from-background-secondary to-background-primary"

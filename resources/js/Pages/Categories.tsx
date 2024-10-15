@@ -1,12 +1,10 @@
-import CTA from "@/components/sections/CTA";
-import Footer from "@/components/sections/Footer";
-import NavBar from "@/components/sections/NavBar";
-import Header from "@/components/ui/header";
-import {ArrowLeftIcon} from "lucide-react";
-import {useEffect, useState} from "react";
-import Skeleton, {SkeletonTheme} from "react-loading-skeleton";
-import {PageProps} from "@/types";
+import CTA from "@/Components/Sections/CTA";
+import Footer from "@/Components/Sections/Footer";
+import NavBar from "@/Components/Sections/NavBar";
+import Header from "@/Components/ui/header";
+import React, {useEffect, useState} from "react";
 import {Head, Link} from "@inertiajs/react";
+import {AuthProps, Categories, Category} from "@/types";
 
 interface Files {
     imgUrls: string[];
@@ -20,7 +18,12 @@ interface Files {
     propertyType?: string;
 }
 
-const Categories = ({auth, categories}) => {
+interface CategoryProps{
+    auth: AuthProps
+    categories: Categories
+}
+
+const Categories: React.FC<CategoryProps> = ({auth, categories}) => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -41,7 +44,7 @@ const Categories = ({auth, categories}) => {
                         showAbstract={true}
                     />
                     <div className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center mt-10">
-                        {categories.map((category) => {
+                        {categories?.map((category: Category) => {
                             let image;
                             const categoryImage = category.image.path.split('/')
                             if (categoryImage[0] == 'https:') {

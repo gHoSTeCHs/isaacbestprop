@@ -42,13 +42,14 @@ const PropertyCard: React.FC<PropertyProps> = ({
                             index: React.Key | null | undefined
                         ) => {
                             let images;
-                            const imagePath = image.path?.split('/');
+                            const imagePath = image?.path?.split('/');
 
-                            if (imagePath[0] == 'https:') {
-                                images = image.path
-                            } else if (imagePath[0] == 'uploads') {
-                                images = `${window.location.origin}/storage/${image.path}`
+                            if (imagePath && imagePath[0] === 'https:') {
+                                images = image.path;
+                            } else if (imagePath && imagePath[0] === 'uploads') {
+                                images = `${window.location.origin}/storage/${image.path}`;
                             }
+
                             return (
                                 <img
                                     loading="lazy"

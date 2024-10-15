@@ -4,17 +4,21 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
 import MultiImageInput from "@/Components/ImageInput";
-import {FormEventHandler, useState} from "react";
+import React, {FormEventHandler, useState} from "react";
 import {toast} from "react-toastify";
 import TextArea from "@/Components/TextArea";
 import PrimaryButton from "@/Components/PrimaryButton";
 import Modal from "@/Components/Modal";
 import {Trash} from "lucide-react";
+import {Category} from "@/types";
 
+interface AdminCategoriesProps {
+    categories?: Category[]
+}
 
-const Dashboard = ({categories}) => {
+const Dashboard: React.FC<AdminCategoriesProps> = ({categories}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [categoryToDelete, setCategoryToDelete] = useState(null);
+    const [categoryToDelete, setCategoryToDelete] = useState<Category>();
     const closeModal = () => {
         setIsModalOpen(false); // Close the modal
     };
@@ -36,7 +40,7 @@ const Dashboard = ({categories}) => {
         })
     }
 
-    const handleDelete = (id) => {
+    const handleDelete = (id: number) => {
         destroy(route('admin.delete', id), {
             onSuccess: () => {
                 if (isModalOpen) {
@@ -133,7 +137,7 @@ const Dashboard = ({categories}) => {
                             <div>
                                 <div
                                     className=" grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center mt-10">
-                                    {categories.map((category, index) => {
+                                    {categories?.map((category, index) => {
                                         let image;
                                         const categoryImage = category.image.path.split('/')
                                         if (categoryImage[0] == 'https:') {

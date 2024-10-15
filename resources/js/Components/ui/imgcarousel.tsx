@@ -55,7 +55,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                 <div className="embla__containerV2">
                     {slides.map((image, index) => {
                         const imagePath = image.split('/')
-                        let finalPath;
+                        let finalPath: string ;
                         if (imagePath[0] == 'https:') {
                             finalPath = image
                         } else if (imagePath[0] == 'uploads') {
@@ -83,7 +83,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                         className="embla-thumbs__container bg-background-primary border border-border border-r-0 border-l-0 rounded-md p-2 flex justify-between">
                         {slides.map((image, index) => {
                             const imagePath = image.split('/')
-                            let finalPath;
+                            let finalPath: string ;
                             if (imagePath[0] == 'https:') {
                                 finalPath = image
                             } else if (imagePath[0] == 'uploads') {
@@ -91,12 +91,12 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                             }
                             return (
                                 <Thumb
-                                key={index}
-                                onClick={() => onThumbClick(index)}
-                                selected={index === selectedIndex}
-                                index={index}
-                                image={finalPath}
-                            />
+                                    key={index}
+                                    onClick={() => onThumbClick(index)}
+                                    selected={index === selectedIndex}
+                                    index={index}
+                                    image={finalPath}
+                                />
                             )
                         })}
                     </div>

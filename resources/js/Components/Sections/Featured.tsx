@@ -1,12 +1,10 @@
 import PropertyCard from '../PropertyCard';
 import Header from '../ui/header';
 import Button from '../ui/button';
-import {useEffect, useState} from 'react';
-// import { Loader } from 'lucide-react';
-import Skeleton, {SkeletonTheme} from 'react-loading-skeleton';
+import React, {useState} from 'react';
 import 'react-loading-skeleton/dist/skeleton.css';
 import {Link} from "@inertiajs/react";
-import property from "@/Pages/Property"; // Import skeleton styles
+import {Property} from "@/types";
 
 // interface Files {
 //     imgUrls: string[];
@@ -20,9 +18,14 @@ import property from "@/Pages/Property"; // Import skeleton styles
 //     propertyType?: string;
 // }
 
-const Featured = ({featuredProperties}) => {
+
+interface FeaturedProps {
+    featuredProperties: Property[];
+}
+
+const Featured: React.FC<FeaturedProps> = ({featuredProperties}) => {
     const [loading, setLoading] = useState(false);
-    const [files, setFiles] = useState<Files[]>([]);
+    // const [files, setFiles] = useState<File[]>([]);
     const [error, setError] = useState<string | null>(null);
 
     return (
@@ -38,19 +41,6 @@ const Featured = ({featuredProperties}) => {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center">
                         {loading ? (
-                            // Display skeleton loaders while loading
-                            // <SkeletonTheme baseColor="#191919">
-                            // 	{Array.from({ length: 3 }).map((_, index) => (
-                            // 		<div
-                            // 			key={index}
-                            // 			className="w-full border border-border py-5 px-4 rounded-lg lg:p-5 hover:scale-105 hover:bg-background-secondary/30 transition-all">
-                            // 			<Skeleton height={200} />
-                            // 			<Skeleton height={20} style={{ marginTop: '10px' }} />
-                            // 			<Skeleton height={20} style={{ marginTop: '5px' }} />
-                            // 			<Skeleton height={20} style={{ marginTop: '5px' }} />
-                            // 		</div>
-                            // 	))}
-                            // </SkeletonTheme>
                             loading
                         ) : (
                             featuredProperties.map((property) => {
@@ -62,7 +52,7 @@ const Featured = ({featuredProperties}) => {
                                         <PropertyCard
                                             title={property.title || 'Untitled'}
                                             location={property.location}
-                                            price={property.price}
+                                            price={String(property.price)}
                                             images={property.images}
                                             description={property.description}
                                         />

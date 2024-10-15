@@ -1,6 +1,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head, useForm} from '@inertiajs/react';
-import {FormEventHandler} from "react";
+import React, {FormEventHandler} from "react";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
@@ -10,8 +10,14 @@ import MultiImageInput from "@/Components/ImageInput";
 import SelectBox from "@/Components/ui/select";
 import {boolean} from "zod";
 import {toast} from 'react-toastify';
+import {Categories, Category, Property} from "@/types";
 
-const UpdateProperty = ({property, categories}) => {
+interface UpdatePropertyProps {
+    property: Property
+    categories: Categories
+}
+
+const UpdateProperty: React.FC<UpdatePropertyProps> = ({property, categories}) => {
     const {data, setData, patch, processing, errors, reset} = useForm({
         title: property.title,
         category: '',
@@ -26,8 +32,8 @@ const UpdateProperty = ({property, categories}) => {
         images: property.images as File[]
     })
 
-    let categoryTitles = [];
-    categories.forEach((category) => {
+    let categoryTitles: any[] = [];
+    categories?.forEach((category: Category) => {
         categoryTitles.push(category.title)
     })
 
@@ -35,12 +41,12 @@ const UpdateProperty = ({property, categories}) => {
         setData('amenities', [...data.amenities, {amenity: ''}])
     }
 
-    const removeAmenity = (index) => {
-        const updatedAmenities = data.amenities.filter((_, i) => i !== index);
+    const removeAmenity = (index: number) => {
+        const updatedAmenities = data.amenities.filter((_: any, i:any) => i !== index);
         setData('amenities', updatedAmenities);
     };
 
-    const handleAmenityChange = (index, e) => {
+    const handleAmenityChange = (index:number, e:any) => {
         const updatedAmenities = [...data.amenities];
         updatedAmenities[index].amenity = e.target.value;
         setData('amenities', updatedAmenities);
@@ -121,7 +127,7 @@ const UpdateProperty = ({property, categories}) => {
                                 <div>
                                     <InputLabel htmlFor="amenities" value="Amenities"/>
                                     <div className="flex flex-col gap-2">
-                                        {data.amenities.map((data, index) => (
+                                        {data.amenities.map((data:any, index: number) => (
                                             <div key={index} className="flex gap-2">
                                                 <TextInput
                                                     id={`amenity-${index}`}

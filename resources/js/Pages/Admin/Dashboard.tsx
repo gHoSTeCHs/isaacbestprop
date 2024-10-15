@@ -2,13 +2,16 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head, Link, useForm} from '@inertiajs/react';
 import PropertyCard from "@/Components/PropertyCard";
 import {Edit, Trash} from "lucide-react";
-import {useState} from "react";
+import React, {useState} from "react";
 import Modal from "@/Components/Modal";
 import {toast} from "react-toastify";
+import {PaginatedProperties, Properties, Property} from "@/types";
 
-const Dashboard = ({properties}) => {
+const Dashboard: ({properties}: { properties: PaginatedProperties }) => React.JSX.Element = ({properties}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [propertyToDelete, setPropertyToDelete] = useState(null)
+    const [propertyToDelete, setPropertyToDelete] = useState<Property>()
+
+    console.log(properties)
 
     const closeModal = () => {
         setIsModalOpen(false)
@@ -16,7 +19,7 @@ const Dashboard = ({properties}) => {
 
     const {post, delete: destroy} = useForm({})
 
-    const handleDelete = (id) => {
+    const handleDelete = (id: any) => {
         destroy(route('admin.properties', id), {
             onSuccess: () => {
                 if (isModalOpen) {
@@ -63,7 +66,7 @@ const Dashboard = ({properties}) => {
                                 </div>
                             </Modal>
 
-                            {properties.data.length < 1 ?
+                            {properties?.data.length < 1 ?
                                 <>
                                     No properties found
                                 </> :
@@ -100,7 +103,7 @@ const Dashboard = ({properties}) => {
                                 </div>}
 
                             <div className="pagination mt-6">
-                                {properties.links.map((link, index) => (
+                                {properties?.links.map((link: any, index: number) => (
                                     <Link
                                         key={index}
                                         href={link.url}

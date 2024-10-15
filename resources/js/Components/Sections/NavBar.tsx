@@ -1,16 +1,19 @@
-import {useState} from 'react';
-import {PageProps} from "@/types";
-import {authLinks, navLinks} from '@/constants/data';
+import React, {useState} from 'react';
+import {navLinks} from '@/constants/data';
 import Button from '../ui/button';
-import {InertiaLinkProps, Link} from '@inertiajs/react';
+import {Link} from '@inertiajs/react';
 
 import icons from "@/constants/icons";
+import {AuthProps} from "@/types";
 
-const NavBar = ({auth}) => {
+
+const NavBar: ({auth}: { auth: any }) => React.JSX.Element = ({auth}) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const toggleMenu = () => {
         setIsMenuOpen((prev) => !prev);
     };
+
+    console.log(auth)
 
     auth.user === null ? console.log('Null') : ('Not Null')
 

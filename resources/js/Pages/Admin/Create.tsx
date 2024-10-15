@@ -1,6 +1,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head, useForm} from '@inertiajs/react';
-import {FormEventHandler} from "react";
+import React, {FormEventHandler} from "react";
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
@@ -10,8 +10,10 @@ import MultiImageInput from "@/Components/ImageInput";
 import SelectBox from "@/Components/ui/select";
 import {boolean} from "zod";
 import {toast} from 'react-toastify';
+import {Category} from "@/types";
 
-const AdminDashboard = ({categories}) => {
+
+const AdminDashboard: ({categories}: { categories: any }) => React.JSX.Element = ({categories}) => {
 
     const {data, setData, post, processing, errors, reset} = useForm({
         title: '',
@@ -27,8 +29,8 @@ const AdminDashboard = ({categories}) => {
         images: [] as File[]
     })
 
-    let categoryTitles = [];
-    categories.forEach((category) => {
+    let categoryTitles: any[] = [];
+    categories.forEach((category: Category) => {
         categoryTitles.push(category.title)
     })
 
@@ -36,12 +38,12 @@ const AdminDashboard = ({categories}) => {
         setData('amenities', [...data.amenities, {value: ''}])
     }
 
-    const removeAmenity = (index) => {
+    const removeAmenity = (index: number) => {
         const updatedAmenities = data.amenities.filter((_, i) => i !== index);
         setData('amenities', updatedAmenities);
     };
 
-    const handleAmenityChange = (index, e) => {
+    const handleAmenityChange = (index: number, e: any) => {
         const updatedAmenities = [...data.amenities];
         updatedAmenities[index].value = e.target.value;
         setData('amenities', updatedAmenities);

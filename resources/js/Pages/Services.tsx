@@ -1,11 +1,13 @@
-import Service from '@/components/Service';
-import CTA from '@/components/sections/CTA';
-import Footer from '@/components/sections/Footer';
-import NavBar from '@/components/sections/NavBar';
-import Header from '@/components/ui/header';
+import Service from "@/Components/Service";
+import CTA from "@/Components/Sections/CTA";
+import Footer from "@/Components/Sections/Footer";
+import NavBar from "@/Components/Sections/NavBar";
+import Header from "@/Components/ui/header";
 import {OurServices} from '@/constants/data';
+import React from "react";
+import {AuthProps} from "@/types";
 
-const Services = ({auth}) => {
+const Services: ({auth}: { auth: any }) => React.JSX.Element = ({auth}) => {
     return (
         <div>
             <NavBar auth={auth}/>

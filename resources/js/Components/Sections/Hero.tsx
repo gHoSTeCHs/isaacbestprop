@@ -4,8 +4,14 @@ import Stats from '../Stats';
 import {InertiaLinkProps, Link} from '@inertiajs/react';
 import {useGSAP} from '@gsap/react';
 import gsap from 'gsap';
+import {Category} from "@/types";
+import React from "react";
 
-const Hero = ({categories}) => {
+interface HeroProps {
+    categories: Category[]
+}
+
+const Hero: React.FC<HeroProps> = ({categories}) => {
     useGSAP(() => {
         gsap.fromTo(
             '#img',
@@ -93,7 +99,7 @@ const Hero = ({categories}) => {
                         className="grid grid-cols-3 gap-4 lg:w-auto">
                         {categories.length > 1 ?
                             <>
-                                {categories.map((category, index) => {
+                                {categories.map((category, index: number) => {
                                     return (
                                         <Button className="bg-gray-700 para text-white" key={index}>
                                             <Link

@@ -20,7 +20,7 @@ const Dashboard: ({properties}: { properties: PaginatedProperties }) => React.JS
     const {post, delete: destroy} = useForm({})
 
     const handleDelete = (id: any) => {
-        destroy(route('admin.properties', id), {
+        destroy(route('admin.properties.delete', id), {
             onSuccess: () => {
                 if (isModalOpen) {
                     closeModal()
@@ -87,7 +87,7 @@ const Dashboard: ({properties}: { properties: PaginatedProperties }) => React.JS
                                                     images={property.images}
                                                 />
                                                 <div className='absolute flex items-center gap-3 top-4 right-4'>
-                                                    <Link href={route('admin.properties', property.id)}>
+                                                    <Link href={route('admin.properties.show', property.id)}>
                                                         <Edit className='text-blue-600 font-bold' size={30}
                                                         />
                                                     </Link>

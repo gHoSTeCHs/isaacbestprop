@@ -38,7 +38,7 @@ const Dashboard: React.FC<AdminCategoriesProps> = ({categories}) => {
     const handleSubmit: FormEventHandler = (e) => {
         e.preventDefault()
 
-        post(route('admin.category'), {
+        post(route('admin.category.create'), {
             onSuccess: () => {
                 reset('title', 'image', 'description')
                 toast.success('Category created successfully');

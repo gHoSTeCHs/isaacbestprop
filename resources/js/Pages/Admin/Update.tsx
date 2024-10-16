@@ -72,7 +72,7 @@ const UpdateProperty: React.FC<UpdatePropertyProps> = ({property, categories}) =
         const id = property.id;
 
         try {
-            await patch(route('admin.properties', id), {
+            await patch(route('admin.properties.update', id), {
                 onSuccess: () => {
                     toast.success('Property Updated');
                 }

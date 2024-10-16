@@ -11,22 +11,9 @@ import z from "zod";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Head, Link} from "@inertiajs/react";
-import React, {useState} from "react";
+import React from "react";
 import {Amenity, AuthProps, PropertyImage} from "@/types";
 import type {Property} from '@/types'
-
-// interface File {
-//     images: [];
-//     title: string;
-//     location: string;
-//     price: string;
-//     imgUrls: string[];
-//     description: string;
-//     amenity: string[];
-//     bedrooms: string;
-//     bathrooms: string;
-//     video_url: string;
-// }
 
 interface PropertyPageProps {
     auth: AuthProps

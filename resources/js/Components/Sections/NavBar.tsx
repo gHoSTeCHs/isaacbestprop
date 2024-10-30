@@ -13,9 +13,7 @@ const NavBar: ({auth}: { auth: any }) => React.JSX.Element = ({auth}) => {
         setIsMenuOpen((prev) => !prev);
     };
 
-    console.log(auth)
-
-    auth.user === null ? console.log('Null') : ('Not Null')
+    // auth.user === null ? console.log('Null') : ('Not Null')
 
     return (
         <div className="bg-background-secondary py-4 border border-border border-l-0 border-r-0">

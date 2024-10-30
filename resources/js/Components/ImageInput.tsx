@@ -104,9 +104,9 @@ const MultiImageInput: React.FC<MultiImageInputProps> = ({onChange, value, id}) 
 
     const deleteImage = async (id: any) => {
         try {
-            await destroy(route('admin.images', id), {
+            destroy(route('admin.images', id), {
                 onSuccess: () => {
-                    toast.success('Image deleted successfully')
+                    toast.success('Image deleted successfully');
                 }
             })
         } catch (e) {

@@ -2,24 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Property;
-use App\Models\PropertyCategory;
+use App\Models\GalleryImage;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
-use Inertia\Response;
 
-class PropertyController extends Controller
+class GalleryImageController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $title = $request->title;
-        $property = Property::query()->where('title', $title)->with(['images', 'amenities'])->first();
-        return Inertia::render('Property', [
-            'property' => $property
-        ]);
+        //
     }
 
     /**
@@ -41,16 +34,15 @@ class PropertyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Property $property)
+    public function show(GalleryImage $galleryImage)
     {
         //
-
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Property $property)
+    public function edit(GalleryImage $galleryImage)
     {
         //
     }
@@ -58,7 +50,7 @@ class PropertyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Property $property)
+    public function update(Request $request, GalleryImage $galleryImage)
     {
         //
     }
@@ -66,7 +58,7 @@ class PropertyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Property $property)
+    public function destroy(GalleryImage $galleryImage)
     {
         //
     }

@@ -11,6 +11,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import Modal from "@/Components/Modal";
 import {Trash} from "lucide-react";
 import {Category} from "@/types";
+import {images} from "@/constants";
 
 interface AdminCategoriesProps {
     categories?: Category[]
@@ -148,11 +149,16 @@ const Dashboard: React.FC<AdminCategoriesProps> = ({categories}) => {
                                     className=" grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center mt-10">
                                     {categories?.map((category, index) => {
                                         let image;
-                                        const categoryImage = category.image.path.split('/')
+                                        const categoryImage = category.image.path?.split('/')
                                         if (categoryImage[0] == 'https:') {
                                             image = category.image.path;
                                         } else if (categoryImage[0] == 'uploads') {
                                             image = `${window.location.origin}/storage/${category.image.path}`
+                                        }
+
+                                        if (!categoryImage) {
+                                            image = images.fallback;
+                                            console.log(image)
                                         }
 
                                         return (

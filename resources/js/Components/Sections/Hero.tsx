@@ -112,6 +112,12 @@ const Hero: React.FC<HeroProps> = ({categories}) => {
                             <></>}
                     </div>
                     <Stats/>
+                    <div className='grid grid-cols-1 mt-6'>
+                        <Button variant='secondary'>
+                            <Link href='/gallery'>Gallery / Building Designs</Link>
+                        </Button>
+                    </div>
+
                 </div>
             </section>
         </div>

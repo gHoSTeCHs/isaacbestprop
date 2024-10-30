@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Property;
 use App\Models\PropertyCategory;
@@ -52,6 +53,8 @@ Route::get('/Properties', function () {
 });
 
 
+
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
 require __DIR__ . '/properties.php';
+require __DIR__ . '/gallery.php';

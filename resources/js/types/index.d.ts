@@ -105,3 +105,22 @@ export interface PaginatedProperties {
     to: number
     total: number
 }
+
+export interface AdminGalleryCreate {
+    title: string
+}
+
+export interface GalleryCategory {
+    id: number
+    category: string
+    created_at: string | null | number
+    updated_at: string | null | number
+}
+
+export interface GalleryImage {
+    id: number
+    gallery_id: number
+    path: string
+    created_at: string | null | number
+    updated_at: string | null | number
+}

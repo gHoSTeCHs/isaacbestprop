@@ -53,6 +53,7 @@ import sustainability from '../../images/sustainability.png';
 import space_optimization from '../../images/space_optimization.png';
 import design from '../../images/design.png';
 import architecture from '../../images/architecture.png';
+import fallback from '../../images/fallback.jpg'
 
 export default {
     building,
@@ -110,4 +111,5 @@ export default {
     space_optimization,
     design,
     architecture,
+    fallback
 };

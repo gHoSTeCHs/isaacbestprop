@@ -58,3 +58,4 @@ require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
 require __DIR__ . '/properties.php';
 require __DIR__ . '/gallery.php';
+require __DIR__ . '/construction.php';

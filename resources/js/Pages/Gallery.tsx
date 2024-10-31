@@ -6,7 +6,7 @@ import {
     ZoomIn,
 } from "lucide-react";
 import Modal from "@/Components/Modal";
-import {Link} from "@inertiajs/react";
+import {Head, Link} from "@inertiajs/react";
 
 const Gallery = ({galleryCategories, auth, galleryImages}: {
     galleryCategories: GalleryCategory[],
@@ -19,6 +19,7 @@ const Gallery = ({galleryCategories, auth, galleryImages}: {
     return (
         <>
             <NavBar auth={auth}/>
+            <Head title='Gallery Page'/>
             <div className="max-w-7xl mx-auto p-6">
                 <div className="flex flex-wrap gap-2 mb-8">
                     <Link href={'/gallery'}>
@@ -29,9 +30,8 @@ const Gallery = ({galleryCategories, auth, galleryImages}: {
                         </Button>
                     </Link>
                     {galleryCategories.map((category, index: number) => (
-                        <Link href={`/gallery/${category.category}`}>
+                        <Link href={`/gallery/${category.category}`} key={index}>
                             <Button
-                                key={index}
                                 className="capitalize"
                             >
                                 {category.category}
@@ -125,4 +125,5 @@ const Gallery = ({galleryCategories, auth, galleryImages}: {
     );
 }
 
-export default Gallery
+// @ts-ignore
+export default Gallery;

@@ -318,6 +318,40 @@ export const OurServices = [
         ctalink: '#',
     },
     {
+        title: 'House Furnishing',
+        description:
+            'Turn your house into a stunning home with IsaacBestProperties professional furnishing services that blend style with comfort.',
+        subservices: [
+            {
+                title: 'Design Consultation',
+                description:
+                    'Explore your style preferences and space potential with our expert interior designers.',
+                image: images.valuation,
+            },
+            {
+                title: 'Custom Solutions',
+                description:
+                    'Every space tells a unique story. We create personalized furnishing plans that match your lifestyle.',
+                image: images.marketing,
+            },
+            {
+                title: 'Quality Selection',
+                description:
+                    'Access our curated collection of premium furniture and decor pieces from trusted manufacturers.',
+                image: images.negotiation,
+            },
+            {
+                title: 'Installation Excellence',
+                description:
+                    'From assembly to arrangement, our professional team ensures flawless execution of your furnishing plan.',
+                image: images.success,
+            },
+        ],
+        ctaheader: "Elevate Your Home's Ambiance Today",
+        ctadescription: "Ready to reimagine your living space? Discover our House Furnishing Service options and let us help you create the home you've always dreamed of.",
+        ctalink: '#',
+    },
+    {
         title: 'Elevate Your Space',
         description:
             'Transform your property into a masterpiece with our expert design and architecture services.',
@@ -355,7 +389,7 @@ export const OurServices = [
     {
         title: 'Effortless Property Management',
         description:
-            "Owning a property should be a pleasure, not a hassle. IsaacBestProperties's Property Management Service takes the stress out of property ownership.",
+            "Owning a property should be a pleasure, not a hassle. IsaacBestProperties Property Management Service takes the stress out of property ownership.",
         subservices: [
             {
                 title: 'Tenant Harmony',

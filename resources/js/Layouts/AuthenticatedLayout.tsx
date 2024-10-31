@@ -52,6 +52,13 @@ export default function Authenticated({
                                         >
                                             Categories
                                         </NavLink>
+
+                                        <NavLink
+                                            href={route('gallery.index')}
+                                            active={route().current('gallery.index')}
+                                        >
+                                            Gallery
+                                        </NavLink>
                                     </> :
                                     <p></p>
                                 }
@@ -169,6 +176,13 @@ export default function Authenticated({
                                     active={route().current('admin.category')}
                                 >
                                     Categories
+                                </ResponsiveNavLink>
+
+                                <ResponsiveNavLink
+                                    href={route('gallery.index')}
+                                    active={route().current('gallery.index')}
+                                >
+                                    Gallery
                                 </ResponsiveNavLink>
                             </>
                             :

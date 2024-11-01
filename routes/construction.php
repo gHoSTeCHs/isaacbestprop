@@ -10,4 +10,5 @@ Route::get('/construction/projects/{id}', [ConstructionController::class, 'show'
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/construction', [AdminConstructionController::class, 'index'])->name('construction.index');
     Route::post('/admin/construction', [AdminConstructionController::class, 'store'])->name('construction.store');
+    Route::delete('/admin/construction/{id}', [AdminConstructionController::class, 'destroy'])->name('admin.projects.delete');
 });

@@ -16,7 +16,10 @@ class AdminConstructionController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Admin/Construction/Index', []);
+        $constructions = Construction::query()->with('images')->get();
+        return Inertia::render('Admin/Construction/Index', [
+            'constructions' => $constructions
+        ]);
     }
 
     /**
@@ -85,8 +88,18 @@ class AdminConstructionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(AdminConstruction $adminConstruction)
+    public function destroy($id)
     {
         //
+        $project = Construction::query()->findOrFail($id);
+        $images = ConstructionImage::query()->where('construction_id', $id)->get();
+
+        if ($images) {
+            foreach ($images as $image) {
+                Storage::disk('public')->delete($image->path);
+            }
+        }
+
+        $project->delete();
     }
 }

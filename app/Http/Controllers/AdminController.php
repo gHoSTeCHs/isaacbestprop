@@ -151,6 +151,7 @@ class AdminController extends Controller
         }
 
         $property->delete();
+
     }
 
     public function destroy($id): void

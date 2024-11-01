@@ -56,9 +56,9 @@ const Hero: React.FC<HeroProps> = ({categories}) => {
                         className="lg:h-[500px] lg:w-[800px]"
                     />
                 </div>
-                <div>
+                <div className=''>
                     <div
-                        className="mt-5 mb-7 md:w-[450px] md:text-center md:flex md:flex-col md:items-center md:jusitfy-center md:gap-2 md:mx-auto md:mt-2 lg:w-auto lg:text-left">
+                        className="mt-5 mb-7 md:w-[450px] md:text-center md:flex md:flex-col md:items-center md:jusitfy-center md:gap-2 md:mx-auto md:mt-2 lg:w-auto lg:text-left ">
                         <h2
                             id="text"
                             className="text-[28px] font-semibold text-primary md:text-4xl lg:text-5xl">
@@ -116,7 +116,7 @@ const Hero: React.FC<HeroProps> = ({categories}) => {
                             <></>}
                     </div>
                     <Stats/>
-                    <div className='grid grid-cols-1 mt-6'>
+                    <div className='grid grid-cols-1 mt-5 mb-10'>
                         <Button variant='secondary'>
                             <Link href='/gallery'>Gallery / Building Designs</Link>
                         </Button>

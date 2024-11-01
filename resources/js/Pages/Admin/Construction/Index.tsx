@@ -1,6 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import {Head, useForm} from "@inertiajs/react";
-import React, {FormEventHandler} from "react";
+import React, {FormEventHandler, useState} from "react";
 import InputLabel from "@/Components/InputLabel";
 import InputError from "@/Components/InputError";
 import MultiImageInput from "@/Components/ImageInput";
@@ -9,6 +9,8 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import {toast} from "react-toastify";
 import TextInput from "@/Components/TextInput";
 import TextArea from "@/Components/TextArea";
+import {ConstructionProject} from "@/types";
+import Projects from "@/Pages/Admin/Construction/Partials/Projects";
 
 const formData = z.object({
     title: z.string(),
@@ -20,7 +22,10 @@ const formData = z.object({
 
 type FormData = z.infer<typeof formData>
 
-const AdminConstruction = () => {
+const AdminConstruction = ({constructions}: { constructions: ConstructionProject[] }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [projectToDelete, setProjectToDelete] = useState<ConstructionProject>()
+
 
     const {data, setData, errors, post, processing, reset} = useForm<FormData>({
         title: '',
@@ -131,6 +136,8 @@ const AdminConstruction = () => {
                                     </PrimaryButton>
                                 </div>
                             </form>
+
+                            <Projects constructions={constructions}/>
                         </div>
                     </div>
                 </div>

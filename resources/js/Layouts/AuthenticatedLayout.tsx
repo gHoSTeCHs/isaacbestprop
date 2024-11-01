@@ -59,6 +59,13 @@ export default function Authenticated({
                                         >
                                             Gallery
                                         </NavLink>
+
+                                        <NavLink
+                                            href={route('construction.index')}
+                                            active={route().current('construction.index')}
+                                        >
+                                            Construction
+                                        </NavLink>
                                     </> :
                                     <p></p>
                                 }
@@ -183,6 +190,13 @@ export default function Authenticated({
                                     active={route().current('gallery.index')}
                                 >
                                     Gallery
+                                </ResponsiveNavLink>
+
+                                <ResponsiveNavLink
+                                    href={route('construction.index')}
+                                    active={route().current('construction.index')}
+                                >
+                                    Construction
                                 </ResponsiveNavLink>
                             </>
                             :

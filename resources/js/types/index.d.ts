@@ -26,9 +26,6 @@ export interface AuthProps {
     user: UserAuth
 }
 
-export interface Amnenity {
-
-}
 
 export interface CategoryImage {
     path: string
@@ -123,4 +120,31 @@ export interface GalleryImage {
     path: string
     created_at: string | null | number
     updated_at: string | null | number
+}
+
+export interface ConstructionImage{
+    id: number
+    construction_id: number
+    path: string
+    created_at: string
+    updated_at: string
+}
+
+export interface ConstructionType{
+    id: number
+    title: string
+    description: string
+    price: string | number
+    youtube_url: string
+}
+
+export interface ConstructionProject{
+    id: 1
+    title: string
+    description:string
+    price: string
+    images: ConstructionImage[]
+    created_at: string | number
+    updated_at: string
+    youtube_url: string
 }

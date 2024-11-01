@@ -99,6 +99,10 @@ const Hero: React.FC<HeroProps> = ({categories}) => {
                         className="grid grid-cols-3 gap-4 lg:w-auto">
                         {categories.length > 1 ?
                             <>
+                                <Button className="bg-gray-700 para text-white">
+                                    <Link
+                                        href={`/construction`}>Construction</Link>
+                                </Button>
                                 {categories.map((category, index: number) => {
                                     return (
                                         <Button className="bg-gray-700 para text-white" key={index}>

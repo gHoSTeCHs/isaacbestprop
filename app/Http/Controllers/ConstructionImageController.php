@@ -2,22 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Construction;
+use App\Models\ConstructionImage;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
-class ConstructionController extends Controller
+class ConstructionImageController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $projects = Construction::query()
-            ->with(['images'])->get();
-        return Inertia::render('Construction/Index', ['projects' => $projects]);
+        //
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -38,17 +34,15 @@ class ConstructionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Construction $construction, int $id)
+    public function show(ConstructionImage $constructionImage)
     {
-        $project = Construction::query()->where('id', $id)->with(['images'])->first();
-
-        return Inertia::render('Construction/Show', ['project' => $project]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Construction $construction)
+    public function edit(ConstructionImage $constructionImage)
     {
         //
     }
@@ -56,7 +50,7 @@ class ConstructionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Construction $construction)
+    public function update(Request $request, ConstructionImage $constructionImage)
     {
         //
     }
@@ -64,7 +58,7 @@ class ConstructionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Construction $construction)
+    public function destroy(ConstructionImage $constructionImage)
     {
         //
     }

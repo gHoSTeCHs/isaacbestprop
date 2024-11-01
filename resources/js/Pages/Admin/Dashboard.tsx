@@ -11,8 +11,6 @@ const Dashboard: ({properties}: { properties: PaginatedProperties }) => React.JS
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [propertyToDelete, setPropertyToDelete] = useState<Property>()
 
-    console.log(properties)
-
     const closeModal = () => {
         setIsModalOpen(false)
     }
